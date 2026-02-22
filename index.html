@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Il Gioco della Memoria 🌸</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #FDF6EC;
+    --warm: #F5E6D0;
+    --terracotta: #C4704A;
+    --terra-light: #E8956D;
+    --green: #6B9E78;
+    --green-light: #8FBC9B;
+    --brown: #7A5C45;
+    --text: #3D2B1F;
+    --text-light: #7A5C45;
+    --gold: #D4A843;
+    --shadow: rgba(61, 43, 31, 0.12);
+  }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Background decoration */
+  body::before {
+    content: '';
+    position: fixed;
+    top: -50%;
+    right: -20%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, #F5E6D0 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    bottom: -20%;
+    left: -10%;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, #E8F5EB 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .app {
+    position: relative;
+    z-index: 1;
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 20px 16px 40px;
+    min-height: 100vh;
+  }
+
+  /* Header */
+  .header {
+    text-align: center;
+    padding: 24px 0 16px;
+    animation: fadeDown 0.6s ease;
+  }
+
+  .header-flower {
+    font-size: 40px;
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  .header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    color: var(--terracotta);
+    line-height: 1.2;
+  }
+
+  .header .date-pill {
+    display: inline-block;
+    margin-top: 10px;
+    background: var(--warm);
+    border: 2px solid var(--terra-light);
+    border-radius: 20px;
+    padding: 6px 18px;
+    font-size: 16px;
+    color: var(--brown);
+    font-weight: 700;
+  }
+
+  /* Nav tabs */
+  .nav {
+    display: flex;
+    gap: 8px;
+    margin: 20px 0;
+    background: var(--warm);
+    padding: 6px;
+    border-radius: 20px;
+    animation: fadeUp 0.5s ease 0.1s both;
+  }
+
+  .nav-btn {
+    flex: 1;
+    padding: 14px 10px;
+    border: none;
+    border-radius: 14px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 17px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    background: transparent;
+    color: var(--text-light);
+  }
+
+  .nav-btn.active {
+    background: white;
+    color: var(--terracotta);
+    box-shadow: 0 4px 16px var(--shadow);
+  }
+
+  /* Cards */
+  .card {
+    background: white;
+    border-radius: 24px;
+    padding: 28px 24px;
+    box-shadow: 0 8px 32px var(--shadow);
+    margin-bottom: 16px;
+    animation: fadeUp 0.4s ease both;
+    border: 1.5px solid rgba(196, 112, 74, 0.08);
+  }
+
+  /* Quiz section */
+  .quiz-counter {
+    text-align: center;
+    font-size: 15px;
+    color: var(--text-light);
+    font-weight: 600;
+    margin-bottom: 16px;
+    letter-spacing: 0.5px;
+  }
+
+  .quiz-icon {
+    text-align: center;
+    font-size: 72px;
+    margin-bottom: 16px;
+    display: block;
+    animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  }
+
+  .quiz-question {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    text-align: center;
+    color: var(--text);
+    line-height: 1.35;
+    margin-bottom: 28px;
+  }
+
+  .options-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .option-btn {
+    width: 100%;
+    padding: 20px 24px;
+    border: 2.5px solid var(--warm);
+    border-radius: 18px;
+    background: white;
+    font-family: 'Nunito', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: center;
+    letter-spacing: 0.2px;
+  }
+
+  .option-btn:active { transform: scale(0.97); }
+
+  .option-btn.correct {
+    background: #E8F5EB;
+    border-color: var(--green);
+    color: #2D6B3A;
+  }
+
+  .option-btn.wrong {
+    background: #FDE8E4;
+    border-color: #D95C4A;
+    color: #7A2010;
+  }
+
+  .option-btn.disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+
+  /* Feedback */
+  .feedback {
+    text-align: center;
+    margin-top: 20px;
+    padding: 16px;
+    border-radius: 16px;
+    font-size: 22px;
+    font-weight: 800;
+    animation: popIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  }
+
+  .feedback.correct {
+    background: #E8F5EB;
+    color: #2D6B3A;
+  }
+
+  .feedback.wrong {
+    background: #FDE8E4;
+    color: #7A2010;
+  }
+
+  /* Next button */
+  .next-btn {
+    width: 100%;
+    margin-top: 16px;
+    padding: 20px;
+    background: var(--terracotta);
+    color: white;
+    border: none;
+    border-radius: 18px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 6px 20px rgba(196, 112, 74, 0.35);
+  }
+
+  .next-btn:active { transform: scale(0.97); }
+
+  .next-btn.green {
+    background: var(--green);
+    box-shadow: 0 6px 20px rgba(107, 158, 120, 0.35);
+  }
+
+  /* Score card */
+  .score-card {
+    text-align: center;
+    padding: 32px 24px;
+  }
+
+  .score-emoji { font-size: 80px; display: block; margin-bottom: 16px; }
+
+  .score-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 30px;
+    color: var(--terracotta);
+    margin-bottom: 8px;
+  }
+
+  .score-text {
+    font-size: 20px;
+    color: var(--text-light);
+    margin-bottom: 24px;
+    line-height: 1.5;
+  }
+
+  .score-number {
+    font-size: 52px;
+    font-weight: 800;
+    color: var(--gold);
+    display: block;
+  }
+
+  /* Music section */
+  .music-header {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    color: var(--terracotta);
+    margin-bottom: 6px;
+  }
+
+  .music-sub {
+    font-size: 15px;
+    color: var(--text-light);
+    margin-bottom: 20px;
+  }
+
+  .song-card {
+    background: white;
+    border-radius: 20px;
+    padding: 20px;
+    margin-bottom: 12px;
+    box-shadow: 0 4px 20px var(--shadow);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    border: 1.5px solid rgba(196, 112, 74, 0.08);
+    animation: fadeUp 0.4s ease both;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .song-card:active { transform: scale(0.98); }
+
+  .song-note {
+    font-size: 36px;
+    min-width: 50px;
+    text-align: center;
+  }
+
+  .song-info { flex: 1; }
+
+  .song-title {
+    font-weight: 800;
+    font-size: 18px;
+    color: var(--text);
+    margin-bottom: 3px;
+  }
+
+  .song-artist {
+    font-size: 15px;
+    color: var(--text-light);
+  }
+
+  .song-year {
+    font-size: 13px;
+    background: var(--warm);
+    color: var(--brown);
+    padding: 3px 10px;
+    border-radius: 10px;
+    font-weight: 700;
+  }
+
+  .play-btn {
+    background: var(--terracotta);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 46px;
+    height: 46px;
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(196, 112, 74, 0.35);
+    transition: all 0.2s;
+    flex-shrink: 0;
+    text-decoration: none;
+  }
+
+  /* Congrats banner */
+  .daily-done {
+    text-align: center;
+    padding: 24px;
+    background: linear-gradient(135deg, #FDF6EC, #F5E6D0);
+    border-radius: 24px;
+    border: 2px solid var(--gold);
+    margin-bottom: 16px;
+  }
+
+  .daily-done .big-emoji { font-size: 60px; display: block; margin-bottom: 10px; }
+
+  .daily-done p {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    color: var(--brown);
+    line-height: 1.4;
+  }
+
+  /* Animations */
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes popIn {
+    from { opacity: 0; transform: scale(0.7); }
+    to { opacity: 1; transform: scale(1); }
+  }
+</style>
+</head>
+<body>
+<div class="app" id="app"></div>
+
+<script>
+// ── DATA ──────────────────────────────────────────────────────────────────────
+
+const TUTTI_QUIZ = [
+  // Animali
+  { icon: '🐱', domanda: 'Che animale fa "Miao"?', risposte: ['Il Gatto', 'Il Cane', 'Il Coniglio'], corretta: 0 },
+  { icon: '🐶', domanda: 'Che animale fa "Bau Bau"?', risposte: ['Il Gatto', 'Il Cane', 'Il Maiale'], corretta: 1 },
+  { icon: '🐄', domanda: 'Che animale ci dà il latte?', risposte: ['La Pecora', 'Il Toro', 'La Mucca'], corretta: 2 },
+  { icon: '🐔', domanda: 'Che animale fa le uova?', risposte: ['La Gallina', 'Il Coniglio', 'Il Cavallo'], corretta: 0 },
+  { icon: '🐝', domanda: 'Chi produce il miele?', risposte: ['La Farfalla', 'L\'Ape', 'Il Grillo'], corretta: 1 },
+  { icon: '🐟', domanda: 'Dove vive il pesce?', risposte: ['Nel bosco', 'In montagna', 'Nel mare'], corretta: 2 },
+  { icon: '🦁', domanda: 'Come si chiama "il re degli animali"?', risposte: ['Il Leone', 'La Tigre', 'L\'Elefante'], corretta: 0 },
+  { icon: '🐘', domanda: 'Qual è l\'animale con la proboscide?', risposte: ['Il Rinoceronte', 'L\'Ippopotamo', 'L\'Elefante'], corretta: 2 },
+  // Colori
+  { icon: '🌹', domanda: 'Di che colore è una rosa classica?', risposte: ['Blu', 'Rossa', 'Verde'], corretta: 1 },
+  { icon: '☀️', domanda: 'Di che colore è il sole?', risposte: ['Giallo', 'Verde', 'Viola'], corretta: 0 },
+  { icon: '🌊', domanda: 'Di che colore è il mare?', risposte: ['Rosso', 'Blu', 'Arancione'], corretta: 1 },
+  { icon: '🍎', domanda: 'Di che colore è una mela matura?', risposte: ['Rossa', 'Blu', 'Nera'], corretta: 0 },
+  { icon: '🍋', domanda: 'Di che colore è il limone?', risposte: ['Verde', 'Arancione', 'Giallo'], corretta: 2 },
+  { icon: '🌿', domanda: 'Di che colore è l\'erba?', risposte: ['Verde', 'Marrone', 'Giallo'], corretta: 0 },
+  // Oggetti quotidiani
+  { icon: '⌚', domanda: 'Cosa si mette al polso per sapere l\'ora?', risposte: ['L\'Anello', 'L\'Orologio', 'Il Braccialetto'], corretta: 1 },
+  { icon: '☕', domanda: 'In quale tazzina si beve il caffè?', risposte: ['Nel Bicchiere', 'Nella Tazzina', 'Nel Piatto'], corretta: 1 },
+  { icon: '🛏️', domanda: 'Dove si dorme la notte?', risposte: ['Sul Divano', 'In Cucina', 'Nel Letto'], corretta: 2 },
+  { icon: '📚', domanda: 'Con cosa si legge una storia?', risposte: ['Con un Fiore', 'Con un Libro', 'Con una Forchetta'], corretta: 1 },
+  { icon: '🪞', domanda: 'In cosa ci si specchia?', risposte: ['Nel Quadro', 'Nel Vetro della Finestra', 'Nello Specchio'], corretta: 2 },
+  { icon: '🌂', domanda: 'Cosa si usa quando piove?', risposte: ['Il Cappello di Paglia', 'L\'Ombrello', 'I Guanti'], corretta: 1 },
+  // Stagioni e natura
+  { icon: '🌸', domanda: 'In quale stagione sbocciano i fiori?', risposte: ['In Inverno', 'In Primavera', 'In Autunno'], corretta: 1 },
+  { icon: '❄️', domanda: 'In quale stagione cade la neve?', risposte: ['In Estate', 'In Primavera', 'In Inverno'], corretta: 2 },
+  { icon: '🌊', domanda: 'In quale stagione si va al mare?', risposte: ['In Estate', 'In Autunno', 'In Inverno'], corretta: 0 },
+  { icon: '🍂', domanda: 'In quale stagione cadono le foglie?', risposte: ['In Primavera', 'In Autunno', 'In Estate'], corretta: 1 },
+  // Cibo
+  { icon: '🍕', domanda: 'Quale cibo tipico italiano ha la forma rotonda e si cuoce nel forno?', risposte: ['Il Risotto', 'La Pizza', 'La Pasta'], corretta: 1 },
+  { icon: '🍝', domanda: 'Come si chiama il piatto italiano con gli spaghetti?', risposte: ['La Polenta', 'La Pasta', 'Il Panino'], corretta: 1 },
+  { icon: '🫒', domanda: 'Da cosa si ricava l\'olio d\'oliva?', risposte: ['Dal Pomodoro', 'Dalle Olive', 'Dal Limone'], corretta: 1 },
+  { icon: '🍞', domanda: 'Cosa si compra dal fornaio?', risposte: ['La Pasta', 'Il Pane', 'Il Latte'], corretta: 1 },
+];
+
+const CANZONI = [
+  { titolo: 'Volare', artista: 'Domenico Modugno', anno: '1958', emoji: '🕊️', url: 'https://www.youtube.com/results?search_query=Volare+Domenico+Modugno' },
+  { titolo: 'Nel blu dipinto di blu', artista: 'Domenico Modugno', anno: '1958', emoji: '🎵', url: 'https://www.youtube.com/results?search_query=Nel+blu+dipinto+di+blu+Modugno' },
+  { titolo: 'O Sole Mio', artista: 'Canzone Napoletana', anno: '1898', emoji: '☀️', url: 'https://www.youtube.com/results?search_query=o+sole+mio+canzone+napoletana' },
+  { titolo: 'Azzurro', artista: 'Adriano Celentano', anno: '1968', emoji: '💙', url: 'https://www.youtube.com/results?search_query=Azzurro+Adriano+Celentano' },
+  { titolo: 'Il cielo in una stanza', artista: 'Gino Paoli', anno: '1960', emoji: '🌙', url: 'https://www.youtube.com/results?search_query=Il+cielo+in+una+stanza+Gino+Paoli' },
+  { titolo: 'Sapore di sale', artista: 'Gino Paoli', anno: '1963', emoji: '🌊', url: 'https://www.youtube.com/results?search_query=Sapore+di+sale+Gino+Paoli' },
+  { titolo: 'La vita è bella', artista: 'Nicola Piovani', anno: '1997', emoji: '🎬', url: 'https://www.youtube.com/results?search_query=La+vita+e+bella+Nicola+Piovani' },
+  { titolo: 'Torna a Surriento', artista: 'Canzone Napoletana', anno: '1902', emoji: '🌹', url: 'https://www.youtube.com/results?search_query=Torna+a+Surriento+canzone+napoletana' },
+  { titolo: 'Reginella', artista: 'Canzone Napoletana', anno: '1917', emoji: '👑', url: 'https://www.youtube.com/results?search_query=Reginella+canzone+napoletana' },
+  { titolo: 'Funiculi Funicula', artista: 'Luigi Denza', anno: '1880', emoji: '🚠', url: 'https://www.youtube.com/results?search_query=Funiculi+Funicula+Luigi+Denza' },
+  { titolo: 'Il mondo', artista: 'Jimmy Fontana', anno: '1963', emoji: '🌍', url: 'https://www.youtube.com/results?search_query=Il+Mondo+Jimmy+Fontana' },
+  { titolo: 'Che sera', artista: 'Al Bano & Romina Power', anno: '1970', emoji: '✨', url: 'https://www.youtube.com/results?search_query=Che+sera+Al+Bano+Romina+Power' },
+];
+
+const MESSAGGI_GIUSTO = ['Bravissima! 🌟', 'Perfetto! 🌸', 'Esatto! ✨', 'Che brava! 🎉', 'Meravigliosa! 💛'];
+const MESSAGGI_SBAGLIATO = ['Ci mancherà poco! 😊', 'Quasi! Riprova! 🌷', 'Va benissimo! 💕'];
+
+// ── STATE ─────────────────────────────────────────────────────────────────────
+
+let stato = {
+  tab: 'quiz',           // 'quiz' | 'musica'
+  domandaIdx: 0,
+  rispostaData: false,
+  rispostaScelta: null,
+  punteggio: 0,
+  quizFinito: false,
+  domandeOggi: [],
+};
+
+// Seleziona 5 domande casuali per oggi (basate sulla data)
+function getDomandeOggi() {
+  const seed = new Date().toDateString();
+  let hash = 0;
+  for (let c of seed) hash = (hash * 31 + c.charCodeAt(0)) & 0xffffffff;
+  const shuffled = [...TUTTI_QUIZ].sort(() => {
+    hash = (hash * 1664525 + 1013904223) & 0xffffffff;
+    return (hash & 1) ? 1 : -1;
+  });
+  return shuffled.slice(0, 5);
+}
+
+function getCanzoniOggi() {
+  const seed = new Date().toDateString() + 'music';
+  let hash = 0;
+  for (let c of seed) hash = (hash * 31 + c.charCodeAt(0)) & 0xffffffff;
+  const shuffled = [...CANZONI].sort(() => {
+    hash = (hash * 1664525 + 1013904223) & 0xffffffff;
+    return (hash & 1) ? 1 : -1;
+  });
+  return shuffled.slice(0, 5);
+}
+
+// ── HELPERS ───────────────────────────────────────────────────────────────────
+
+function getDataItaliana() {
+  const giorni = ['Domenica','Lunedì','Martedì','Mercoledì','Giovedì','Venerdì','Sabato'];
+  const mesi = ['gennaio','febbraio','marzo','aprile','maggio','giugno','luglio','agosto','settembre','ottobre','novembre','dicembre'];
+  const d = new Date();
+  return `${giorni[d.getDay()]} ${d.getDate()} ${mesi[d.getMonth()]}`;
+}
+
+function rand(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+// ── RENDER ────────────────────────────────────────────────────────────────────
+
+function render() {
+  const app = document.getElementById('app');
+  app.innerHTML = '';
+
+  // Header
+  const header = document.createElement('div');
+  header.className = 'header';
+  header.innerHTML = `
+    <span class="header-flower">🌸</span>
+    <h1>Il Gioco della Memoria</h1>
+    <span class="date-pill">📅 ${getDataItaliana()}</span>
+  `;
+  app.appendChild(header);
+
+  // Nav
+  const nav = document.createElement('div');
+  nav.className = 'nav';
+  nav.innerHTML = `
+    <button class="nav-btn ${stato.tab === 'quiz' ? 'active' : ''}" onclick="setTab('quiz')">🧩 Indovina</button>
+    <button class="nav-btn ${stato.tab === 'musica' ? 'active' : ''}" onclick="setTab('musica')">🎵 Musica</button>
+  `;
+  app.appendChild(nav);
+
+  if (stato.tab === 'quiz') renderQuiz(app);
+  else renderMusica(app);
+}
+
+function renderQuiz(app) {
+  if (stato.quizFinito) {
+    renderRisultato(app);
+    return;
+  }
+
+  const dq = stato.domandeOggi;
+  const q = dq[stato.domandaIdx];
+
+  const card = document.createElement('div');
+  card.className = 'card';
+
+  const counter = document.createElement('div');
+  counter.className = 'quiz-counter';
+  counter.textContent = `Domanda ${stato.domandaIdx + 1} di ${dq.length}`;
+  card.appendChild(counter);
+
+  const icon = document.createElement('span');
+  icon.className = 'quiz-icon';
+  icon.textContent = q.icon;
+  card.appendChild(icon);
+
+  const question = document.createElement('div');
+  question.className = 'quiz-question';
+  question.textContent = q.domanda;
+  card.appendChild(question);
+
+  const grid = document.createElement('div');
+  grid.className = 'options-grid';
+
+  q.risposte.forEach((r, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'option-btn';
+    btn.textContent = r;
+
+    if (stato.rispostaData) {
+      if (i === q.corretta) btn.classList.add('correct');
+      else if (i === stato.rispostaScelta) btn.classList.add('wrong');
+      btn.classList.add('disabled');
+    }
+
+    btn.onclick = () => {
+      if (stato.rispostaData) return;
+      stato.rispostaData = true;
+      stato.rispostaScelta = i;
+      if (i === q.corretta) stato.punteggio++;
+      render();
+    };
+
+    grid.appendChild(btn);
+  });
+  card.appendChild(grid);
+
+  // Feedback
+  if (stato.rispostaData) {
+    const fb = document.createElement('div');
+    const isCorretta = stato.rispostaScelta === q.corretta;
+    fb.className = `feedback ${isCorretta ? 'correct' : 'wrong'}`;
+    fb.textContent = isCorretta ? rand(MESSAGGI_GIUSTO) : rand(MESSAGGI_SBAGLIATO);
+    card.appendChild(fb);
+
+    const nextBtn = document.createElement('button');
+    nextBtn.className = `next-btn ${isCorretta ? 'green' : ''}`;
+    const isUltima = stato.domandaIdx === dq.length - 1;
+    nextBtn.textContent = isUltima ? '🏁 Vedi il risultato' : '➡️ Prossima domanda';
+    nextBtn.onclick = () => {
+      if (isUltima) {
+        stato.quizFinito = true;
+      } else {
+        stato.domandaIdx++;
+        stato.rispostaData = false;
+        stato.rispostaScelta = null;
+      }
+      render();
+    };
+    card.appendChild(nextBtn);
+  }
+
+  app.appendChild(card);
+}
+
+function renderRisultato(app) {
+  const tot = stato.domandeOggi.length;
+  const p = stato.punteggio;
+  const perc = Math.round((p / tot) * 100);
+
+  let emoji, titolo, testo;
+  if (perc === 100) { emoji = '🏆'; titolo = 'Perfetto!'; testo = 'Hai risposto a tutte le domande correttamente. Bravissima!'; }
+  else if (perc >= 60) { emoji = '⭐'; titolo = 'Molto bene!'; testo = 'Hai fatto un ottimo lavoro oggi. Sei fantastica!'; }
+  else { emoji = '💛'; titolo = 'Bravo tentativo!'; testo = 'Ogni giorno si migliora. Domani andrà ancora meglio!'; }
+
+  const card = document.createElement('div');
+  card.className = 'card score-card';
+  card.innerHTML = `
+    <span class="score-emoji">${emoji}</span>
+    <div class="score-title">${titolo}</div>
+    <div class="score-text">${testo}</div>
+    <span class="score-number">${p} / ${tot} ✓</span>
+  `;
+
+  const rigiocaBtn = document.createElement('button');
+  rigiocaBtn.className = 'next-btn';
+  rigiocaBtn.style.marginTop = '24px';
+  rigiocaBtn.textContent = '🎵 Ascolta un po\' di musica';
+  rigiocaBtn.onclick = () => setTab('musica');
+  card.appendChild(rigiocaBtn);
+
+  const resetBtn = document.createElement('button');
+  resetBtn.style.cssText = 'width:100%;margin-top:10px;padding:16px;background:transparent;border:2.5px solid #E8956D;border-radius:18px;font-family:Nunito,sans-serif;font-size:18px;font-weight:700;color:#C4704A;cursor:pointer;';
+  resetBtn.textContent = '🔄 Rigioca';
+  resetBtn.onclick = () => {
+    stato.domandaIdx = 0;
+    stato.rispostaData = false;
+    stato.rispostaScelta = null;
+    stato.punteggio = 0;
+    stato.quizFinito = false;
+    stato.domandeOggi = getDomandeOggi();
+    render();
+  };
+  card.appendChild(resetBtn);
+
+  app.appendChild(card);
+}
+
+function renderMusica(app) {
+  const header = document.createElement('div');
+  header.className = 'card';
+  header.innerHTML = `
+    <div class="music-header">🎵 Le canzoni di oggi</div>
+    <div class="music-sub">Tocca ▶ per ascoltare su YouTube</div>
+  `;
+  app.appendChild(header);
+
+  getCanzoniOggi().forEach((s, i) => {
+    const card = document.createElement('div');
+    card.className = 'song-card';
+    card.style.animationDelay = `${i * 0.08}s`;
+    card.innerHTML = `
+      <div class="song-note">${s.emoji}</div>
+      <div class="song-info">
+        <div class="song-title">${s.titolo}</div>
+        <div class="song-artist">${s.artista}</div>
+      </div>
+      <span class="song-year">${s.anno}</span>
+      <a href="${s.url}" target="_blank" class="play-btn">▶</a>
+    `;
+    app.appendChild(card);
+  });
+
+  // Footer incoraggiamento
+  const nota = document.createElement('div');
+  nota.style.cssText = 'text-align:center;padding:16px;font-size:16px;color:#7A5C45;line-height:1.6;';
+  nota.innerHTML = '💛 La musica fa bene al cuore.<br>Buon ascolto!';
+  app.appendChild(nota);
+}
+
+// ── EVENTS ────────────────────────────────────────────────────────────────────
+
+window.setTab = (tab) => { stato.tab = tab; render(); };
+
+// ── INIT ─────────────────────────────────────────────────────────────────────
+
+stato.domandeOggi = getDomandeOggi();
+render();
+</script>
+</body>
+</html>
