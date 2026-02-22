@@ -2,699 +2,775 @@
 <html lang="it">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Il Gioco della Memoria 🌸</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+:root{
+  --cream:#FAF6F0;
+  --warm:#F2E8D9;
+  --warmer:#E8D5BB;
+  --terra:#B5603A;
+  --terra-l:#D4845C;
+  --terra-d:#8A4428;
+  --sage:#7A9E82;
+  --sage-l:#A5C4AC;
+  --gold:#C9943A;
+  --gold-l:#E8BF6A;
+  --text:#2C1A0E;
+  --text-m:#6B4C35;
+  --text-l:#A07858;
+  --white:#FFFFFF;
+  --shadow:rgba(44,26,14,0.10);
+  --shadow-d:rgba(44,26,14,0.18);
+  --r:22px;
+}
+html{background:var(--cream);}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);min-height:100vh;overflow-x:hidden;}
 
-  :root {
-    --cream: #FDF6EC;
-    --warm: #F5E6D0;
-    --terracotta: #C4704A;
-    --terra-light: #E8956D;
-    --green: #6B9E78;
-    --green-light: #8FBC9B;
-    --brown: #7A5C45;
-    --text: #3D2B1F;
-    --text-light: #7A5C45;
-    --gold: #D4A843;
-    --shadow: rgba(61, 43, 31, 0.12);
-  }
+/* ── TEXTURE BG ── */
+body::before{
+  content:'';position:fixed;inset:0;
+  background:
+    radial-gradient(ellipse 60% 40% at 80% 10%, #F2E8D966 0%, transparent 70%),
+    radial-gradient(ellipse 50% 60% at 10% 90%, #E8F2EA55 0%, transparent 70%);
+  pointer-events:none;z-index:0;
+}
 
-  body {
-    font-family: 'Nunito', sans-serif;
-    background: var(--cream);
-    color: var(--text);
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
+.app{position:relative;z-index:1;max-width:440px;margin:0 auto;padding:0 16px 60px;}
 
-  /* Background decoration */
-  body::before {
-    content: '';
-    position: fixed;
-    top: -50%;
-    right: -20%;
-    width: 500px;
-    height: 500px;
-    background: radial-gradient(circle, #F5E6D0 0%, transparent 70%);
-    pointer-events: none;
-    z-index: 0;
-  }
+/* ── HEADER ── */
+.header{padding:28px 0 10px;text-align:center;animation:fadeDown .5s ease both;}
+.header-top{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:4px;}
+.header h1{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:700;color:var(--terra);}
+.header .petal{font-size:28px;}
+.date-tag{display:inline-block;background:var(--warm);border:1.5px solid var(--warmer);border-radius:30px;padding:5px 16px;font-size:14px;font-weight:600;color:var(--text-m);letter-spacing:.3px;}
+.streak-tag{display:inline-flex;align-items:center;gap:5px;background:linear-gradient(135deg,#FFF3E0,#FFE0B2);border:1.5px solid #FFCC80;border-radius:30px;padding:5px 14px;font-size:14px;font-weight:700;color:#E65100;margin-left:8px;}
 
-  body::after {
-    content: '';
-    position: fixed;
-    bottom: -20%;
-    left: -10%;
-    width: 400px;
-    height: 400px;
-    background: radial-gradient(circle, #E8F5EB 0%, transparent 70%);
-    pointer-events: none;
-    z-index: 0;
-  }
+/* ── NAV ── */
+.nav{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:16px 0;background:var(--warm);padding:5px;border-radius:18px;animation:fadeUp .4s .1s ease both;}
+.nav-btn{padding:12px 4px;border:none;border-radius:13px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:700;cursor:pointer;transition:all .2s;background:transparent;color:var(--text-l);line-height:1.3;text-align:center;}
+.nav-btn .nav-icon{display:block;font-size:20px;margin-bottom:3px;}
+.nav-btn.active{background:white;color:var(--terra);box-shadow:0 3px 12px var(--shadow-d);}
 
-  .app {
-    position: relative;
-    z-index: 1;
-    max-width: 480px;
-    margin: 0 auto;
-    padding: 20px 16px 40px;
-    min-height: 100vh;
-  }
+/* ── CARD ── */
+.card{background:white;border-radius:var(--r);padding:24px 20px;box-shadow:0 6px 28px var(--shadow);margin-bottom:14px;border:1px solid rgba(181,96,58,.07);animation:fadeUp .35s ease both;}
+.card-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;color:var(--terra);margin-bottom:4px;}
+.card-sub{font-size:14px;color:var(--text-l);margin-bottom:18px;}
 
-  /* Header */
-  .header {
-    text-align: center;
-    padding: 24px 0 16px;
-    animation: fadeDown 0.6s ease;
-  }
+/* ── QUIZ ── */
+.quiz-progress{height:5px;background:var(--warm);border-radius:10px;margin-bottom:20px;overflow:hidden;}
+.quiz-progress-bar{height:100%;background:linear-gradient(90deg,var(--terra),var(--terra-l));border-radius:10px;transition:width .4s ease;}
+.quiz-icon{text-align:center;font-size:76px;margin-bottom:12px;display:block;animation:popIn .4s cubic-bezier(.34,1.56,.64,1) both;}
+.quiz-q{font-family:'Cormorant Garamond',serif;font-size:27px;text-align:center;line-height:1.3;margin-bottom:26px;color:var(--text);}
+.opts{display:flex;flex-direction:column;gap:10px;}
+.opt{padding:18px 20px;border:2px solid var(--warm);border-radius:16px;background:white;font-family:'DM Sans',sans-serif;font-size:19px;font-weight:600;color:var(--text);cursor:pointer;transition:all .18s;text-align:left;}
+.opt:active{transform:scale(.98);}
+.opt.correct{background:#EDF7F0;border-color:#4CAF50;color:#1B5E20;}
+.opt.wrong{background:#FDE8E4;border-color:#E57373;color:#7F0000;}
+.opt.reveal{background:#EDF7F0;border-color:#4CAF50;color:#1B5E20;opacity:.7;}
+.opt.disabled{cursor:not-allowed;}
+.feedback-bar{margin-top:14px;padding:14px 18px;border-radius:14px;font-size:20px;font-weight:700;text-align:center;animation:popIn .3s ease both;}
+.feedback-bar.ok{background:#EDF7F0;color:#2E7D32;}
+.feedback-bar.ko{background:#FDE8E4;color:#C62828;}
+.btn-next{width:100%;margin-top:12px;padding:18px;background:var(--terra);color:white;border:none;border-radius:16px;font-family:'DM Sans',sans-serif;font-size:18px;font-weight:700;cursor:pointer;box-shadow:0 5px 18px rgba(181,96,58,.35);transition:all .2s;}
+.btn-next:active{transform:scale(.98);}
+.btn-next.sage{background:var(--sage);box-shadow:0 5px 18px rgba(122,158,130,.35);}
 
-  .header-flower {
-    font-size: 40px;
-    display: block;
-    margin-bottom: 8px;
-  }
+/* ── MEMORY GAME ── */
+.mem-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:4px;}
+.mem-card{aspect-ratio:1;border-radius:14px;border:2px solid var(--warm);background:var(--warm);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:36px;transition:all .25s;position:relative;user-select:none;}
+.mem-card .mem-back{font-size:24px;color:var(--text-l);position:absolute;}
+.mem-card .mem-front{opacity:0;transition:opacity .2s;}
+.mem-card.flipped{background:white;border-color:var(--terra-l);box-shadow:0 3px 12px var(--shadow);}
+.mem-card.flipped .mem-back{opacity:0;}
+.mem-card.flipped .mem-front{opacity:1;}
+.mem-card.matched{background:linear-gradient(135deg,#EDF7F0,#D4EDDA);border-color:#81C784;cursor:default;}
+.mem-card.matched .mem-front{opacity:1;}
+.mem-card.shake{animation:shake .35s ease;}
+.mem-info{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;}
+.mem-stat{text-align:center;}
+.mem-stat .val{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:700;color:var(--terra);}
+.mem-stat .lbl{font-size:12px;color:var(--text-l);font-weight:600;}
 
-  .header h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: 28px;
-    color: var(--terracotta);
-    line-height: 1.2;
-  }
+/* ── COMPLETA ── */
+.frase-container{margin-bottom:20px;}
+.frase-text{font-family:'Cormorant Garamond',serif;font-size:26px;line-height:1.5;text-align:center;color:var(--text);margin-bottom:6px;}
+.frase-autore{text-align:center;font-size:14px;color:var(--text-l);font-style:italic;margin-bottom:22px;}
+.blank{display:inline-block;min-width:90px;border-bottom:3px solid var(--terra);color:var(--terra);font-weight:700;padding:0 4px;vertical-align:bottom;}
+.frase-opts{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.frase-opt{padding:16px 12px;border:2px solid var(--warm);border-radius:14px;background:white;font-family:'DM Sans',sans-serif;font-size:18px;font-weight:600;color:var(--text);cursor:pointer;transition:all .18s;text-align:center;}
+.frase-opt.correct{background:#EDF7F0;border-color:#4CAF50;color:#1B5E20;}
+.frase-opt.wrong{background:#FDE8E4;border-color:#E57373;color:#7F0000;}
+.frase-opt.reveal{background:#EDF7F0;border-color:#4CAF50;opacity:.6;}
+.frase-opt.disabled{cursor:not-allowed;}
+.frase-counter{text-align:center;font-size:14px;color:var(--text-l);font-weight:600;margin-bottom:16px;}
 
-  .header .date-pill {
-    display: inline-block;
-    margin-top: 10px;
-    background: var(--warm);
-    border: 2px solid var(--terra-light);
-    border-radius: 20px;
-    padding: 6px 18px;
-    font-size: 16px;
-    color: var(--brown);
-    font-weight: 700;
-  }
+/* ── SCORE FINALE ── */
+.result-emoji{font-size:80px;display:block;text-align:center;margin-bottom:12px;animation:popIn .4s ease both;}
+.result-title{font-family:'Cormorant Garamond',serif;font-size:32px;text-align:center;color:var(--terra);margin-bottom:6px;}
+.result-sub{text-align:center;font-size:17px;color:var(--text-m);margin-bottom:24px;line-height:1.5;}
+.result-score{text-align:center;font-size:54px;font-weight:800;color:var(--gold);display:block;font-family:'Cormorant Garamond',serif;}
+.result-label{text-align:center;font-size:15px;color:var(--text-l);margin-bottom:24px;}
+.btn-row{display:flex;flex-direction:column;gap:10px;}
+.btn-outline{width:100%;padding:16px;background:transparent;border:2px solid var(--terra-l);border-radius:16px;font-family:'DM Sans',sans-serif;font-size:17px;font-weight:700;color:var(--terra);cursor:pointer;transition:all .2s;}
 
-  /* Nav tabs */
-  .nav {
-    display: flex;
-    gap: 8px;
-    margin: 20px 0;
-    background: var(--warm);
-    padding: 6px;
-    border-radius: 20px;
-    animation: fadeUp 0.5s ease 0.1s both;
-  }
+/* ── STORICO ── */
+.storico-header{margin-bottom:18px;}
+.streak-big{display:flex;align-items:center;gap:16px;background:linear-gradient(135deg,#FFF8E1,#FFF3CD);border:1.5px solid #FFE082;border-radius:18px;padding:18px 20px;margin-bottom:14px;}
+.streak-fire{font-size:48px;}
+.streak-info .val{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:700;color:#E65100;}
+.streak-info .lbl{font-size:14px;color:#BF360C;font-weight:600;}
+.chart-wrap{margin-top:6px;}
+.chart-title{font-size:14px;font-weight:700;color:var(--text-l);margin-bottom:10px;text-transform:uppercase;letter-spacing:.5px;}
+.chart{display:flex;align-items:flex-end;gap:8px;height:90px;}
+.bar-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;}
+.bar-col{width:100%;border-radius:8px 8px 0 0;transition:height .5s ease;min-height:4px;}
+.bar-col.has-data{background:linear-gradient(180deg,var(--terra-l),var(--terra));}
+.bar-col.today{background:linear-gradient(180deg,var(--gold-l),var(--gold));box-shadow:0 0 10px rgba(201,148,58,.4);}
+.bar-col.empty{background:var(--warm);}
+.bar-day{font-size:11px;color:var(--text-l);font-weight:600;}
+.bar-val{font-size:12px;font-weight:700;color:var(--terra);}
+.games-list{margin-top:14px;}
+.game-row{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:var(--warm);border-radius:14px;margin-bottom:8px;}
+.game-row-left{display:flex;align-items:center;gap:12px;}
+.game-row-icon{font-size:28px;}
+.game-row-name{font-weight:700;font-size:16px;color:var(--text);}
+.game-row-date{font-size:12px;color:var(--text-l);}
+.game-row-score{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;color:var(--gold);}
+.no-data{text-align:center;padding:32px 20px;color:var(--text-l);font-size:16px;line-height:1.6;}
 
-  .nav-btn {
-    flex: 1;
-    padding: 14px 10px;
-    border: none;
-    border-radius: 14px;
-    font-family: 'Nunito', sans-serif;
-    font-size: 17px;
-    font-weight: 800;
-    cursor: pointer;
-    transition: all 0.25s ease;
-    background: transparent;
-    color: var(--text-light);
-  }
+/* ── MUSICA ── */
+.song-row{display:flex;align-items:center;gap:14px;padding:16px;background:white;border-radius:18px;box-shadow:0 4px 18px var(--shadow);margin-bottom:10px;border:1px solid rgba(181,96,58,.07);animation:fadeUp .3s ease both;}
+.song-em{font-size:34px;min-width:46px;text-align:center;}
+.song-inf{flex:1;}
+.song-t{font-weight:700;font-size:17px;color:var(--text);}
+.song-a{font-size:13px;color:var(--text-l);margin-top:2px;}
+.song-y{font-size:12px;background:var(--warm);color:var(--text-m);padding:2px 9px;border-radius:8px;font-weight:700;white-space:nowrap;}
+.play-a{display:flex;align-items:center;justify-content:center;background:var(--terra);color:white;border-radius:50%;width:44px;height:44px;font-size:16px;text-decoration:none;box-shadow:0 3px 10px rgba(181,96,58,.35);flex-shrink:0;transition:transform .15s;}
+.play-a:active{transform:scale(.93);}
+.music-note{text-align:center;padding:18px;font-size:15px;color:var(--text-l);line-height:1.7;}
 
-  .nav-btn.active {
-    background: white;
-    color: var(--terracotta);
-    box-shadow: 0 4px 16px var(--shadow);
-  }
-
-  /* Cards */
-  .card {
-    background: white;
-    border-radius: 24px;
-    padding: 28px 24px;
-    box-shadow: 0 8px 32px var(--shadow);
-    margin-bottom: 16px;
-    animation: fadeUp 0.4s ease both;
-    border: 1.5px solid rgba(196, 112, 74, 0.08);
-  }
-
-  /* Quiz section */
-  .quiz-counter {
-    text-align: center;
-    font-size: 15px;
-    color: var(--text-light);
-    font-weight: 600;
-    margin-bottom: 16px;
-    letter-spacing: 0.5px;
-  }
-
-  .quiz-icon {
-    text-align: center;
-    font-size: 72px;
-    margin-bottom: 16px;
-    display: block;
-    animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
-  }
-
-  .quiz-question {
-    font-family: 'Playfair Display', serif;
-    font-size: 26px;
-    text-align: center;
-    color: var(--text);
-    line-height: 1.35;
-    margin-bottom: 28px;
-  }
-
-  .options-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .option-btn {
-    width: 100%;
-    padding: 20px 24px;
-    border: 2.5px solid var(--warm);
-    border-radius: 18px;
-    background: white;
-    font-family: 'Nunito', sans-serif;
-    font-size: 20px;
-    font-weight: 700;
-    color: var(--text);
-    cursor: pointer;
-    transition: all 0.2s ease;
-    text-align: center;
-    letter-spacing: 0.2px;
-  }
-
-  .option-btn:active { transform: scale(0.97); }
-
-  .option-btn.correct {
-    background: #E8F5EB;
-    border-color: var(--green);
-    color: #2D6B3A;
-  }
-
-  .option-btn.wrong {
-    background: #FDE8E4;
-    border-color: #D95C4A;
-    color: #7A2010;
-  }
-
-  .option-btn.disabled {
-    cursor: not-allowed;
-    opacity: 0.6;
-  }
-
-  /* Feedback */
-  .feedback {
-    text-align: center;
-    margin-top: 20px;
-    padding: 16px;
-    border-radius: 16px;
-    font-size: 22px;
-    font-weight: 800;
-    animation: popIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both;
-  }
-
-  .feedback.correct {
-    background: #E8F5EB;
-    color: #2D6B3A;
-  }
-
-  .feedback.wrong {
-    background: #FDE8E4;
-    color: #7A2010;
-  }
-
-  /* Next button */
-  .next-btn {
-    width: 100%;
-    margin-top: 16px;
-    padding: 20px;
-    background: var(--terracotta);
-    color: white;
-    border: none;
-    border-radius: 18px;
-    font-family: 'Nunito', sans-serif;
-    font-size: 20px;
-    font-weight: 800;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    box-shadow: 0 6px 20px rgba(196, 112, 74, 0.35);
-  }
-
-  .next-btn:active { transform: scale(0.97); }
-
-  .next-btn.green {
-    background: var(--green);
-    box-shadow: 0 6px 20px rgba(107, 158, 120, 0.35);
-  }
-
-  /* Score card */
-  .score-card {
-    text-align: center;
-    padding: 32px 24px;
-  }
-
-  .score-emoji { font-size: 80px; display: block; margin-bottom: 16px; }
-
-  .score-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 30px;
-    color: var(--terracotta);
-    margin-bottom: 8px;
-  }
-
-  .score-text {
-    font-size: 20px;
-    color: var(--text-light);
-    margin-bottom: 24px;
-    line-height: 1.5;
-  }
-
-  .score-number {
-    font-size: 52px;
-    font-weight: 800;
-    color: var(--gold);
-    display: block;
-  }
-
-  /* Music section */
-  .music-header {
-    font-family: 'Playfair Display', serif;
-    font-size: 22px;
-    color: var(--terracotta);
-    margin-bottom: 6px;
-  }
-
-  .music-sub {
-    font-size: 15px;
-    color: var(--text-light);
-    margin-bottom: 20px;
-  }
-
-  .song-card {
-    background: white;
-    border-radius: 20px;
-    padding: 20px;
-    margin-bottom: 12px;
-    box-shadow: 0 4px 20px var(--shadow);
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    border: 1.5px solid rgba(196, 112, 74, 0.08);
-    animation: fadeUp 0.4s ease both;
-    text-decoration: none;
-    color: inherit;
-    cursor: pointer;
-    transition: all 0.2s ease;
-  }
-
-  .song-card:active { transform: scale(0.98); }
-
-  .song-note {
-    font-size: 36px;
-    min-width: 50px;
-    text-align: center;
-  }
-
-  .song-info { flex: 1; }
-
-  .song-title {
-    font-weight: 800;
-    font-size: 18px;
-    color: var(--text);
-    margin-bottom: 3px;
-  }
-
-  .song-artist {
-    font-size: 15px;
-    color: var(--text-light);
-  }
-
-  .song-year {
-    font-size: 13px;
-    background: var(--warm);
-    color: var(--brown);
-    padding: 3px 10px;
-    border-radius: 10px;
-    font-weight: 700;
-  }
-
-  .play-btn {
-    background: var(--terracotta);
-    color: white;
-    border: none;
-    border-radius: 50%;
-    width: 46px;
-    height: 46px;
-    font-size: 18px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 4px 12px rgba(196, 112, 74, 0.35);
-    transition: all 0.2s;
-    flex-shrink: 0;
-    text-decoration: none;
-  }
-
-  /* Congrats banner */
-  .daily-done {
-    text-align: center;
-    padding: 24px;
-    background: linear-gradient(135deg, #FDF6EC, #F5E6D0);
-    border-radius: 24px;
-    border: 2px solid var(--gold);
-    margin-bottom: 16px;
-  }
-
-  .daily-done .big-emoji { font-size: 60px; display: block; margin-bottom: 10px; }
-
-  .daily-done p {
-    font-family: 'Playfair Display', serif;
-    font-size: 22px;
-    color: var(--brown);
-    line-height: 1.4;
-  }
-
-  /* Animations */
-  @keyframes fadeDown {
-    from { opacity: 0; transform: translateY(-20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  @keyframes popIn {
-    from { opacity: 0; transform: scale(0.7); }
-    to { opacity: 1; transform: scale(1); }
-  }
+/* ── ANIMATIONS ── */
+@keyframes fadeDown{from{opacity:0;transform:translateY(-16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+@keyframes popIn{from{opacity:0;transform:scale(.6)}to{opacity:1;transform:scale(1)}}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}
+@keyframes confetti{0%{opacity:1;transform:translateY(0) rotate(0)}100%{opacity:0;transform:translateY(80px) rotate(360deg)}}
 </style>
 </head>
 <body>
 <div class="app" id="app"></div>
 
 <script>
-// ── DATA ──────────────────────────────────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════
+// DATA
+// ═══════════════════════════════════════════════════════════
 
-const TUTTI_QUIZ = [
-  // Animali
-  { icon: '🐱', domanda: 'Che animale fa "Miao"?', risposte: ['Il Gatto', 'Il Cane', 'Il Coniglio'], corretta: 0 },
-  { icon: '🐶', domanda: 'Che animale fa "Bau Bau"?', risposte: ['Il Gatto', 'Il Cane', 'Il Maiale'], corretta: 1 },
-  { icon: '🐄', domanda: 'Che animale ci dà il latte?', risposte: ['La Pecora', 'Il Toro', 'La Mucca'], corretta: 2 },
-  { icon: '🐔', domanda: 'Che animale fa le uova?', risposte: ['La Gallina', 'Il Coniglio', 'Il Cavallo'], corretta: 0 },
-  { icon: '🐝', domanda: 'Chi produce il miele?', risposte: ['La Farfalla', 'L\'Ape', 'Il Grillo'], corretta: 1 },
-  { icon: '🐟', domanda: 'Dove vive il pesce?', risposte: ['Nel bosco', 'In montagna', 'Nel mare'], corretta: 2 },
-  { icon: '🦁', domanda: 'Come si chiama "il re degli animali"?', risposte: ['Il Leone', 'La Tigre', 'L\'Elefante'], corretta: 0 },
-  { icon: '🐘', domanda: 'Qual è l\'animale con la proboscide?', risposte: ['Il Rinoceronte', 'L\'Ippopotamo', 'L\'Elefante'], corretta: 2 },
-  // Colori
-  { icon: '🌹', domanda: 'Di che colore è una rosa classica?', risposte: ['Blu', 'Rossa', 'Verde'], corretta: 1 },
-  { icon: '☀️', domanda: 'Di che colore è il sole?', risposte: ['Giallo', 'Verde', 'Viola'], corretta: 0 },
-  { icon: '🌊', domanda: 'Di che colore è il mare?', risposte: ['Rosso', 'Blu', 'Arancione'], corretta: 1 },
-  { icon: '🍎', domanda: 'Di che colore è una mela matura?', risposte: ['Rossa', 'Blu', 'Nera'], corretta: 0 },
-  { icon: '🍋', domanda: 'Di che colore è il limone?', risposte: ['Verde', 'Arancione', 'Giallo'], corretta: 2 },
-  { icon: '🌿', domanda: 'Di che colore è l\'erba?', risposte: ['Verde', 'Marrone', 'Giallo'], corretta: 0 },
-  // Oggetti quotidiani
-  { icon: '⌚', domanda: 'Cosa si mette al polso per sapere l\'ora?', risposte: ['L\'Anello', 'L\'Orologio', 'Il Braccialetto'], corretta: 1 },
-  { icon: '☕', domanda: 'In quale tazzina si beve il caffè?', risposte: ['Nel Bicchiere', 'Nella Tazzina', 'Nel Piatto'], corretta: 1 },
-  { icon: '🛏️', domanda: 'Dove si dorme la notte?', risposte: ['Sul Divano', 'In Cucina', 'Nel Letto'], corretta: 2 },
-  { icon: '📚', domanda: 'Con cosa si legge una storia?', risposte: ['Con un Fiore', 'Con un Libro', 'Con una Forchetta'], corretta: 1 },
-  { icon: '🪞', domanda: 'In cosa ci si specchia?', risposte: ['Nel Quadro', 'Nel Vetro della Finestra', 'Nello Specchio'], corretta: 2 },
-  { icon: '🌂', domanda: 'Cosa si usa quando piove?', risposte: ['Il Cappello di Paglia', 'L\'Ombrello', 'I Guanti'], corretta: 1 },
-  // Stagioni e natura
-  { icon: '🌸', domanda: 'In quale stagione sbocciano i fiori?', risposte: ['In Inverno', 'In Primavera', 'In Autunno'], corretta: 1 },
-  { icon: '❄️', domanda: 'In quale stagione cade la neve?', risposte: ['In Estate', 'In Primavera', 'In Inverno'], corretta: 2 },
-  { icon: '🌊', domanda: 'In quale stagione si va al mare?', risposte: ['In Estate', 'In Autunno', 'In Inverno'], corretta: 0 },
-  { icon: '🍂', domanda: 'In quale stagione cadono le foglie?', risposte: ['In Primavera', 'In Autunno', 'In Estate'], corretta: 1 },
-  // Cibo
-  { icon: '🍕', domanda: 'Quale cibo tipico italiano ha la forma rotonda e si cuoce nel forno?', risposte: ['Il Risotto', 'La Pizza', 'La Pasta'], corretta: 1 },
-  { icon: '🍝', domanda: 'Come si chiama il piatto italiano con gli spaghetti?', risposte: ['La Polenta', 'La Pasta', 'Il Panino'], corretta: 1 },
-  { icon: '🫒', domanda: 'Da cosa si ricava l\'olio d\'oliva?', risposte: ['Dal Pomodoro', 'Dalle Olive', 'Dal Limone'], corretta: 1 },
-  { icon: '🍞', domanda: 'Cosa si compra dal fornaio?', risposte: ['La Pasta', 'Il Pane', 'Il Latte'], corretta: 1 },
+const QUIZ_POOL = [
+  {icon:'🐱',q:'Che animale fa "Miao"?',r:['Il Gatto','Il Cane','Il Coniglio'],c:0},
+  {icon:'🐶',q:'Che animale fa "Bau Bau"?',r:['Il Gatto','Il Cane','Il Maiale'],c:1},
+  {icon:'🐄',q:'Che animale ci dà il latte?',r:['La Pecora','Il Toro','La Mucca'],c:2},
+  {icon:'🐔',q:'Che animale fa le uova?',r:['La Gallina','Il Coniglio','Il Cavallo'],c:0},
+  {icon:'🐝',q:'Chi produce il miele?',r:['La Farfalla',"L'Ape",'Il Grillo'],c:1},
+  {icon:'🦁',q:'Come si chiama "il re degli animali"?',r:['Il Leone','La Tigre',"L'Elefante"],c:0},
+  {icon:'🌹',q:'Di che colore è una rosa classica?',r:['Blu','Rossa','Verde'],c:1},
+  {icon:'☀️',q:'Di che colore è il sole?',r:['Giallo','Verde','Viola'],c:0},
+  {icon:'🌊',q:'Di che colore è il mare?',r:['Rosso','Blu','Arancione'],c:1},
+  {icon:'🍎',q:'Di che colore è una mela matura?',r:['Rossa','Blu','Nera'],c:0},
+  {icon:'🍋',q:'Di che colore è il limone?',r:['Verde','Arancione','Giallo'],c:2},
+  {icon:'⌚',q:"Cosa si mette al polso per sapere l'ora?",r:["L'Anello","L'Orologio","Il Braccialetto"],c:1},
+  {icon:'☕',q:'In quale tazzina si beve il caffè?',r:['Nel Bicchiere','Nella Tazzina','Nel Piatto'],c:1},
+  {icon:'🛏️',q:'Dove si dorme la notte?',r:['Sul Divano','In Cucina','Nel Letto'],c:2},
+  {icon:'🌸',q:'In quale stagione sbocciano i fiori?',r:['In Inverno','In Primavera','In Autunno'],c:1},
+  {icon:'❄️',q:'In quale stagione cade la neve?',r:['In Estate','In Primavera','In Inverno'],c:2},
+  {icon:'🍕',q:'Quale cibo tipico ha la forma rotonda e si cuoce nel forno?',r:['Il Risotto','La Pizza','La Pasta'],c:1},
+  {icon:'🫒',q:"Da cosa si ricava l'olio d'oliva?",r:['Dal Pomodoro','Dalle Olive','Dal Limone'],c:1},
+  {icon:'🎄',q:'Che festa si celebra il 25 dicembre?',r:['La Pasqua','Il Carnevale','Il Natale'],c:2},
+  {icon:'🐟',q:'Dove vive il pesce?',r:['Nel bosco','In montagna','Nel mare'],c:2},
+];
+
+const MEMORIA_PAIRS = [
+  ['🌹','🌹'],['🍕','🍕'],['☀️','☀️'],['🐱','🐱'],
+  ['🎵','🎵'],['⭐','⭐'],['🌊','🌊'],['🍋','🍋'],
+];
+
+const FRASI_POOL = [
+  {testo:'Volare, oh oh, cantare, oh oh oh oh, nel _____ dipinto di blu',parola:'blu',opz:['blu','verde','rosso','giallo'],c:0,autore:'Domenico Modugno – Nel blu dipinto di blu'},
+  {testo:"Nel mezzo del cammin di nostra _____",parola:'vita',opz:['vita','strada','notte','avventura'],c:0,autore:'Dante Alighieri – Divina Commedia'},
+  {testo:"Chi va piano, va _____ e va lontano",parola:'sano',opz:['sano','forte','bene','lento'],c:0,autore:'Proverbio italiano'},
+  {testo:"Azzurro, il pomeriggio è troppo _____",parola:'lungo',opz:['lungo','caldo','bello','corto'],c:0,autore:'Adriano Celentano – Azzurro'},
+  {testo:"Il cielo in una _____, stanza",parola:'stanza',opz:['stanza','camera','casa','notte'],c:0,autore:'Gino Paoli – Il cielo in una stanza'},
+  {testo:"Paese che vai, usanza che _____",parola:'trovi',opz:['trovi','vedi','senti','porti'],c:0,autore:'Proverbio italiano'},
+  {testo:"A Napoli non si può vivere senza _____ di mare",parola:'sole',opz:['sole','aria','odore','vista'],c:0,autore:'Tradizione napoletana'},
+  {testo:"Non tutte le _____ vengono per nuocere",parola:'ciambelle',opz:['ciambelle','torte','cose','nuvole'],c:0,autore:'Proverbio italiano'},
+  {testo:"Roma non fu costruita in un _____",parola:'giorno',opz:['giorno','anno','secolo','attimo'],c:0,autore:'Proverbio italiano'},
+  {testo:"Il mattino ha _____ in bocca",parola:"l'oro",opz:["l'oro",'la forza','il pane','la luce'],c:0,autore:'Proverbio italiano'},
 ];
 
 const CANZONI = [
-  { titolo: 'Volare', artista: 'Domenico Modugno', anno: '1958', emoji: '🕊️', url: 'https://www.youtube.com/results?search_query=Volare+Domenico+Modugno' },
-  { titolo: 'Nel blu dipinto di blu', artista: 'Domenico Modugno', anno: '1958', emoji: '🎵', url: 'https://www.youtube.com/results?search_query=Nel+blu+dipinto+di+blu+Modugno' },
-  { titolo: 'O Sole Mio', artista: 'Canzone Napoletana', anno: '1898', emoji: '☀️', url: 'https://www.youtube.com/results?search_query=o+sole+mio+canzone+napoletana' },
-  { titolo: 'Azzurro', artista: 'Adriano Celentano', anno: '1968', emoji: '💙', url: 'https://www.youtube.com/results?search_query=Azzurro+Adriano+Celentano' },
-  { titolo: 'Il cielo in una stanza', artista: 'Gino Paoli', anno: '1960', emoji: '🌙', url: 'https://www.youtube.com/results?search_query=Il+cielo+in+una+stanza+Gino+Paoli' },
-  { titolo: 'Sapore di sale', artista: 'Gino Paoli', anno: '1963', emoji: '🌊', url: 'https://www.youtube.com/results?search_query=Sapore+di+sale+Gino+Paoli' },
-  { titolo: 'La vita è bella', artista: 'Nicola Piovani', anno: '1997', emoji: '🎬', url: 'https://www.youtube.com/results?search_query=La+vita+e+bella+Nicola+Piovani' },
-  { titolo: 'Torna a Surriento', artista: 'Canzone Napoletana', anno: '1902', emoji: '🌹', url: 'https://www.youtube.com/results?search_query=Torna+a+Surriento+canzone+napoletana' },
-  { titolo: 'Reginella', artista: 'Canzone Napoletana', anno: '1917', emoji: '👑', url: 'https://www.youtube.com/results?search_query=Reginella+canzone+napoletana' },
-  { titolo: 'Funiculi Funicula', artista: 'Luigi Denza', anno: '1880', emoji: '🚠', url: 'https://www.youtube.com/results?search_query=Funiculi+Funicula+Luigi+Denza' },
-  { titolo: 'Il mondo', artista: 'Jimmy Fontana', anno: '1963', emoji: '🌍', url: 'https://www.youtube.com/results?search_query=Il+Mondo+Jimmy+Fontana' },
-  { titolo: 'Che sera', artista: 'Al Bano & Romina Power', anno: '1970', emoji: '✨', url: 'https://www.youtube.com/results?search_query=Che+sera+Al+Bano+Romina+Power' },
+  {t:'Volare',a:'Domenico Modugno',y:'1958',e:'🕊️',url:'https://www.youtube.com/results?search_query=Volare+Domenico+Modugno'},
+  {t:'Azzurro',a:'Adriano Celentano',y:'1968',e:'💙',url:'https://www.youtube.com/results?search_query=Azzurro+Adriano+Celentano'},
+  {t:'Il cielo in una stanza',a:'Gino Paoli',y:'1960',e:'🌙',url:'https://www.youtube.com/results?search_query=Il+cielo+in+una+stanza+Gino+Paoli'},
+  {t:'Sapore di sale',a:'Gino Paoli',y:'1963',e:'🌊',url:'https://www.youtube.com/results?search_query=Sapore+di+sale+Gino+Paoli'},
+  {t:'O Sole Mio',a:'Canzone Napoletana',y:'1898',e:'☀️',url:'https://www.youtube.com/results?search_query=o+sole+mio'},
+  {t:'Torna a Surriento',a:'Canzone Napoletana',y:'1902',e:'🌹',url:'https://www.youtube.com/results?search_query=Torna+a+Surriento'},
+  {t:'Il mondo',a:'Jimmy Fontana',y:'1963',e:'🌍',url:'https://www.youtube.com/results?search_query=Il+Mondo+Jimmy+Fontana'},
+  {t:'Funiculi Funicula',a:'Luigi Denza',y:'1880',e:'🚠',url:'https://www.youtube.com/results?search_query=Funiculi+Funicula'},
+  {t:'Come prima',a:'Tony Dallara',y:'1958',e:'💛',url:'https://www.youtube.com/results?search_query=Come+prima+Tony+Dallara'},
+  {t:'Nel blu dipinto di blu',a:'Domenico Modugno',y:'1958',e:'🎵',url:'https://www.youtube.com/results?search_query=Nel+blu+dipinto+di+blu+Modugno'},
 ];
 
-const MESSAGGI_GIUSTO = ['Bravissima! 🌟', 'Perfetto! 🌸', 'Esatto! ✨', 'Che brava! 🎉', 'Meravigliosa! 💛'];
-const MESSAGGI_SBAGLIATO = ['Ci mancherà poco! 😊', 'Quasi! Riprova! 🌷', 'Va benissimo! 💕'];
+// ═══════════════════════════════════════════════════════════
+// STORAGE
+// ═══════════════════════════════════════════════════════════
 
-// ── STATE ─────────────────────────────────────────────────────────────────────
+const STORAGE_KEY = 'memoria-storico-v2';
 
-let stato = {
-  tab: 'quiz',           // 'quiz' | 'musica'
-  domandaIdx: 0,
-  rispostaData: false,
-  rispostaScelta: null,
-  punteggio: 0,
-  quizFinito: false,
-  domandeOggi: [],
-};
-
-// Seleziona 5 domande casuali per oggi (basate sulla data)
-function getDomandeOggi() {
-  const seed = new Date().toDateString();
-  let hash = 0;
-  for (let c of seed) hash = (hash * 31 + c.charCodeAt(0)) & 0xffffffff;
-  const shuffled = [...TUTTI_QUIZ].sort(() => {
-    hash = (hash * 1664525 + 1013904223) & 0xffffffff;
-    return (hash & 1) ? 1 : -1;
-  });
-  return shuffled.slice(0, 5);
+async function loadStorico() {
+  try {
+    const r = await window.storage.get(STORAGE_KEY);
+    return r ? JSON.parse(r.value) : [];
+  } catch(e) { return []; }
 }
 
-function getCanzoniOggi() {
-  const seed = new Date().toDateString() + 'music';
-  let hash = 0;
-  for (let c of seed) hash = (hash * 31 + c.charCodeAt(0)) & 0xffffffff;
-  const shuffled = [...CANZONI].sort(() => {
-    hash = (hash * 1664525 + 1013904223) & 0xffffffff;
-    return (hash & 1) ? 1 : -1;
-  });
-  return shuffled.slice(0, 5);
+async function saveRisultato(tipo, punteggio, totale) {
+  try {
+    const storico = await loadStorico();
+    storico.push({tipo, punteggio, totale, data: getTodayKey(), ts: Date.now()});
+    // Mantieni solo ultimi 100
+    const trimmed = storico.slice(-100);
+    await window.storage.set(STORAGE_KEY, JSON.stringify(trimmed));
+  } catch(e) {}
 }
 
-// ── HELPERS ───────────────────────────────────────────────────────────────────
+function getTodayKey() {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
+
+// ═══════════════════════════════════════════════════════════
+// HELPERS
+// ═══════════════════════════════════════════════════════════
+
+function seededShuffle(arr, seed) {
+  const a = [...arr];
+  let h = seed;
+  for (let i = a.length-1; i>0; i--) {
+    h = (h*1664525+1013904223)&0xffffffff;
+    const j = Math.abs(h) % (i+1);
+    [a[i],a[j]] = [a[j],a[i]];
+  }
+  return a;
+}
+
+function getDailySeed() {
+  const d = new Date();
+  return d.getFullYear()*10000 + (d.getMonth()+1)*100 + d.getDate();
+}
+
+function getDailyItems(pool, n, saltOffset=0) {
+  return seededShuffle(pool, getDailySeed()+saltOffset).slice(0,n);
+}
 
 function getDataItaliana() {
-  const giorni = ['Domenica','Lunedì','Martedì','Mercoledì','Giovedì','Venerdì','Sabato'];
-  const mesi = ['gennaio','febbraio','marzo','aprile','maggio','giugno','luglio','agosto','settembre','ottobre','novembre','dicembre'];
-  const d = new Date();
-  return `${giorni[d.getDay()]} ${d.getDate()} ${mesi[d.getMonth()]}`;
+  const g=['Domenica','Lunedì','Martedì','Mercoledì','Giovedì','Venerdì','Sabato'];
+  const m=['gennaio','febbraio','marzo','aprile','maggio','giugno','luglio','agosto','settembre','ottobre','novembre','dicembre'];
+  const d=new Date();
+  return `${g[d.getDay()]} ${d.getDate()} ${m[d.getMonth()]}`;
 }
 
-function rand(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+function rand(arr){return arr[Math.floor(Math.random()*arr.length)];}
 
-// ── RENDER ────────────────────────────────────────────────────────────────────
+const BRAVO=['Bravissima! 🌟','Perfetto! 🌸','Esatto! ✨','Che brava! 🎉','Meravigliosa! 💛'];
+const QUASI=['Quasi! Riprova domani 😊','Va benissimo così! 💕','Ci siamo quasi! 🌷'];
 
-function render() {
-  const app = document.getElementById('app');
-  app.innerHTML = '';
+// ═══════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════
+
+const S = {
+  tab: 'quiz',
+  // quiz
+  qDomande: [], qIdx: 0, qRisposta: false, qScelta: null, qPunteggio: 0, qFinito: false,
+  // memory
+  mCards: [], mFlipped: [], mMatched: [], mTentativi: 0, mLocked: false, mFinito: false,
+  // frasi
+  fFrasi: [], fIdx: 0, fRisposta: false, fScelta: null, fPunteggio: 0, fFinito: false,
+  // storico
+  storico: [],
+};
+
+function initQuiz(){
+  S.qDomande=getDailyItems(QUIZ_POOL,5,0);
+  S.qIdx=0;S.qRisposta=false;S.qScelta=null;S.qPunteggio=0;S.qFinito=false;
+}
+function initMemoria(){
+  const pairs=getDailyItems(MEMORIA_PAIRS,6,100);
+  const flat=pairs.flatMap(p=>p);
+  S.mCards=seededShuffle(flat.map((em,i)=>({em,id:i,pair:Math.floor(i/2)})),getDailySeed()+200);
+  S.mFlipped=[];S.mMatched=[];S.mTentativi=0;S.mLocked=false;S.mFinito=false;
+}
+function initFrasi(){
+  S.fFrasi=getDailyItems(FRASI_POOL,4,300);
+  S.fIdx=0;S.fRisposta=false;S.fScelta=null;S.fPunteggio=0;S.fFinito=false;
+}
+
+// ═══════════════════════════════════════════════════════════
+// RENDER ENGINE
+// ═══════════════════════════════════════════════════════════
+
+async function render(){
+  const app=document.getElementById('app');
+  app.innerHTML='';
+
+  // Storico per streak
+  S.storico = await loadStorico();
+  const streak = calcStreak(S.storico);
 
   // Header
-  const header = document.createElement('div');
-  header.className = 'header';
-  header.innerHTML = `
-    <span class="header-flower">🌸</span>
-    <h1>Il Gioco della Memoria</h1>
-    <span class="date-pill">📅 ${getDataItaliana()}</span>
-  `;
-  app.appendChild(header);
+  const h=document.createElement('div');
+  h.className='header';
+  h.innerHTML=`
+    <div class="header-top">
+      <span class="petal">🌸</span>
+      <h1>Il Gioco della Memoria</h1>
+      <span class="petal">🌸</span>
+    </div>
+    <div>
+      <span class="date-tag">📅 ${getDataItaliana()}</span>
+      ${streak>0?`<span class="streak-tag">🔥 ${streak} giorni</span>`:''}
+    </div>`;
+  app.appendChild(h);
 
   // Nav
-  const nav = document.createElement('div');
-  nav.className = 'nav';
-  nav.innerHTML = `
-    <button class="nav-btn ${stato.tab === 'quiz' ? 'active' : ''}" onclick="setTab('quiz')">🧩 Indovina</button>
-    <button class="nav-btn ${stato.tab === 'musica' ? 'active' : ''}" onclick="setTab('musica')">🎵 Musica</button>
-  `;
+  const nav=document.createElement('div');
+  nav.className='nav';
+  [['quiz','🧩','Quiz'],['memoria','🃏','Memoria'],['frasi','📜','Frasi'],['storico','📊','Storico']].forEach(([id,icon,label])=>{
+    const btn=document.createElement('button');
+    btn.className='nav-btn'+(S.tab===id?' active':'');
+    btn.innerHTML=`<span class="nav-icon">${icon}</span>${label}`;
+    btn.onclick=()=>{S.tab=id;render();};
+    nav.appendChild(btn);
+  });
   app.appendChild(nav);
 
-  if (stato.tab === 'quiz') renderQuiz(app);
-  else renderMusica(app);
+  if(S.tab==='quiz') renderQuiz(app);
+  else if(S.tab==='memoria') renderMemoria(app);
+  else if(S.tab==='frasi') renderFrasi(app);
+  else if(S.tab==='storico') renderStorico(app);
 }
 
-function renderQuiz(app) {
-  if (stato.quizFinito) {
-    renderRisultato(app);
-    return;
-  }
+// ── QUIZ ──────────────────────────────────────────────────
 
-  const dq = stato.domandeOggi;
-  const q = dq[stato.domandaIdx];
+function renderQuiz(app){
+  if(S.qFinito){renderRisultato(app,'quiz',S.qPunteggio,S.qDomande.length);return;}
+  const q=S.qDomande[S.qIdx];
+  const card=document.createElement('div');card.className='card';
 
-  const card = document.createElement('div');
-  card.className = 'card';
+  // Progress
+  const prog=document.createElement('div');prog.className='quiz-progress';
+  const bar=document.createElement('div');bar.className='quiz-progress-bar';
+  bar.style.width=`${((S.qIdx+1)/S.qDomande.length)*100}%`;
+  prog.appendChild(bar);card.appendChild(prog);
 
-  const counter = document.createElement('div');
-  counter.className = 'quiz-counter';
-  counter.textContent = `Domanda ${stato.domandaIdx + 1} di ${dq.length}`;
-  card.appendChild(counter);
+  card.innerHTML+=`
+    <div style="text-align:center;font-size:13px;font-weight:600;color:var(--text-l);margin-bottom:14px">
+      Domanda ${S.qIdx+1} di ${S.qDomande.length}
+    </div>
+    <span class="quiz-icon">${q.icon}</span>
+    <div class="quiz-q">${q.q}</div>`;
 
-  const icon = document.createElement('span');
-  icon.className = 'quiz-icon';
-  icon.textContent = q.icon;
-  card.appendChild(icon);
-
-  const question = document.createElement('div');
-  question.className = 'quiz-question';
-  question.textContent = q.domanda;
-  card.appendChild(question);
-
-  const grid = document.createElement('div');
-  grid.className = 'options-grid';
-
-  q.risposte.forEach((r, i) => {
-    const btn = document.createElement('button');
-    btn.className = 'option-btn';
-    btn.textContent = r;
-
-    if (stato.rispostaData) {
-      if (i === q.corretta) btn.classList.add('correct');
-      else if (i === stato.rispostaScelta) btn.classList.add('wrong');
+  const opts=document.createElement('div');opts.className='opts';
+  q.r.forEach((r,i)=>{
+    const btn=document.createElement('button');btn.className='opt';
+    btn.textContent=r;
+    if(S.qRisposta){
+      if(i===q.c) btn.classList.add('correct');
+      else if(i===S.qScelta) btn.classList.add('wrong');
+      else btn.classList.add('reveal');
       btn.classList.add('disabled');
     }
-
-    btn.onclick = () => {
-      if (stato.rispostaData) return;
-      stato.rispostaData = true;
-      stato.rispostaScelta = i;
-      if (i === q.corretta) stato.punteggio++;
+    btn.onclick=()=>{
+      if(S.qRisposta)return;
+      S.qRisposta=true;S.qScelta=i;
+      if(i===q.c)S.qPunteggio++;
       render();
     };
+    opts.appendChild(btn);
+  });
+  card.appendChild(opts);
 
-    grid.appendChild(btn);
+  if(S.qRisposta){
+    const ok=S.qScelta===q.c;
+    const fb=document.createElement('div');
+    fb.className='feedback-bar '+(ok?'ok':'ko');
+    fb.textContent=ok?rand(BRAVO):rand(QUASI);
+    card.appendChild(fb);
+    const nb=document.createElement('button');
+    nb.className='btn-next'+(ok?' sage':'');
+    const isLast=S.qIdx===S.qDomande.length-1;
+    nb.textContent=isLast?'🏁 Vedi il risultato':'➡️ Prossima domanda';
+    nb.onclick=()=>{
+      if(isLast){S.qFinito=true;saveRisultato('Quiz',S.qPunteggio,S.qDomande.length);}
+      else{S.qIdx++;S.qRisposta=false;S.qScelta=null;}
+      render();
+    };
+    card.appendChild(nb);
+  }
+  app.appendChild(card);
+}
+
+// ── MEMORIA ───────────────────────────────────────────────
+
+function renderMemoria(app){
+  if(S.mFinito){renderRisultato(app,'memoria',S.mCards.length/2,S.mCards.length/2,`in ${S.mTentativi} tentativi`);return;}
+
+  const card=document.createElement('div');card.className='card';
+  card.innerHTML=`
+    <div class="card-title">🃏 Abbina le coppie</div>
+    <div class="card-sub">Trova tutte le coppie uguali!</div>`;
+
+  const info=document.createElement('div');info.className='mem-info';
+  const paired=S.mMatched.length/2;
+  info.innerHTML=`
+    <div class="mem-stat"><div class="val">${paired}</div><div class="lbl">Coppie trovate</div></div>
+    <div class="mem-stat"><div class="val">${S.mCards.length/2-paired}</div><div class="lbl">Rimaste</div></div>
+    <div class="mem-stat"><div class="val">${S.mTentativi}</div><div class="lbl">Tentativi</div></div>`;
+  card.appendChild(info);
+
+  const grid=document.createElement('div');grid.className='mem-grid';
+  S.mCards.forEach((c,i)=>{
+    const mc=document.createElement('div');
+    mc.className='mem-card';
+    mc.id='mc'+i;
+    const isFlipped=S.mFlipped.includes(i);
+    const isMatched=S.mMatched.includes(i);
+    if(isFlipped||isMatched)mc.classList.add('flipped');
+    if(isMatched)mc.classList.add('matched');
+    mc.innerHTML=`<span class="mem-back">🌸</span><span class="mem-front">${c.em}</span>`;
+    if(!isMatched){
+      mc.onclick=()=>flipCard(i);
+    }
+    grid.appendChild(mc);
   });
   card.appendChild(grid);
+  app.appendChild(card);
+}
 
-  // Feedback
-  if (stato.rispostaData) {
-    const fb = document.createElement('div');
-    const isCorretta = stato.rispostaScelta === q.corretta;
-    fb.className = `feedback ${isCorretta ? 'correct' : 'wrong'}`;
-    fb.textContent = isCorretta ? rand(MESSAGGI_GIUSTO) : rand(MESSAGGI_SBAGLIATO);
-    card.appendChild(fb);
-
-    const nextBtn = document.createElement('button');
-    nextBtn.className = `next-btn ${isCorretta ? 'green' : ''}`;
-    const isUltima = stato.domandaIdx === dq.length - 1;
-    nextBtn.textContent = isUltima ? '🏁 Vedi il risultato' : '➡️ Prossima domanda';
-    nextBtn.onclick = () => {
-      if (isUltima) {
-        stato.quizFinito = true;
+function flipCard(i){
+  if(S.mLocked)return;
+  if(S.mFlipped.includes(i)||S.mMatched.includes(i))return;
+  if(S.mFlipped.length>=2)return;
+  S.mFlipped.push(i);
+  const el=document.getElementById('mc'+i);
+  if(el){el.classList.add('flipped');}
+  if(S.mFlipped.length===2){
+    S.mTentativi++;
+    S.mLocked=true;
+    const [a,b]=S.mFlipped;
+    setTimeout(()=>{
+      if(S.mCards[a].em===S.mCards[b].em){
+        S.mMatched.push(a,b);
+        S.mFlipped=[];S.mLocked=false;
+        if(S.mMatched.length===S.mCards.length){
+          S.mFinito=true;
+          saveRisultato('Memoria',S.mCards.length/2,S.mCards.length/2);
+        }
+        render();
       } else {
-        stato.domandaIdx++;
-        stato.rispostaData = false;
-        stato.rispostaScelta = null;
+        const ea=document.getElementById('mc'+a);
+        const eb=document.getElementById('mc'+b);
+        if(ea)ea.classList.add('shake');
+        if(eb)eb.classList.add('shake');
+        setTimeout(()=>{
+          S.mFlipped=[];S.mLocked=false;
+          [ea,eb].forEach(el=>{if(el){el.classList.remove('flipped','shake');}});
+        },600);
       }
+    },700);
+  }
+}
+
+// ── FRASI ─────────────────────────────────────────────────
+
+function renderFrasi(app){
+  if(S.fFinito){renderRisultato(app,'frasi',S.fPunteggio,S.fFrasi.length);return;}
+  const f=S.fFrasi[S.fIdx];
+  const card=document.createElement('div');card.className='card';
+
+  const prog=document.createElement('div');prog.className='quiz-progress';
+  const bar=document.createElement('div');bar.className='quiz-progress-bar';
+  bar.style.width=`${((S.fIdx+1)/S.fFrasi.length)*100}%`;
+  prog.appendChild(bar);card.appendChild(prog);
+
+  const cnt=document.createElement('div');cnt.className='frase-counter';
+  cnt.textContent=`Frase ${S.fIdx+1} di ${S.fFrasi.length}`;
+  card.appendChild(cnt);
+
+  // Testo con blank
+  const parola=S.fRisposta?f.parola:'_____';
+  const testoHtml=f.testo.replace('_____',`<span class="blank">${parola}</span>`);
+  const frase=document.createElement('div');frase.className='frase-container';
+  frase.innerHTML=`
+    <div class="frase-text">"${testoHtml}"</div>
+    <div class="frase-autore">— ${f.autore}</div>`;
+  card.appendChild(frase);
+
+  const opts=document.createElement('div');opts.className='frase-opts';
+  f.opz.forEach((o,i)=>{
+    const btn=document.createElement('button');btn.className='frase-opt';
+    btn.textContent=o;
+    if(S.fRisposta){
+      if(i===f.c)btn.classList.add('correct');
+      else if(i===S.fScelta)btn.classList.add('wrong');
+      else btn.classList.add('reveal');
+      btn.classList.add('disabled');
+    }
+    btn.onclick=()=>{
+      if(S.fRisposta)return;
+      S.fRisposta=true;S.fScelta=i;
+      if(i===f.c)S.fPunteggio++;
       render();
     };
-    card.appendChild(nextBtn);
-  }
+    opts.appendChild(btn);
+  });
+  card.appendChild(opts);
 
+  if(S.fRisposta){
+    const ok=S.fScelta===f.c;
+    const fb=document.createElement('div');fb.className='feedback-bar '+(ok?'ok':'ko');
+    fb.textContent=ok?rand(BRAVO):rand(QUASI);
+    card.appendChild(fb);
+    const nb=document.createElement('button');nb.className='btn-next'+(ok?' sage':'');
+    const isLast=S.fIdx===S.fFrasi.length-1;
+    nb.textContent=isLast?'🏁 Vedi il risultato':'➡️ Prossima frase';
+    nb.onclick=()=>{
+      if(isLast){S.fFinito=true;saveRisultato('Frasi',S.fPunteggio,S.fFrasi.length);}
+      else{S.fIdx++;S.fRisposta=false;S.fScelta=null;}
+      render();
+    };
+    card.appendChild(nb);
+  }
   app.appendChild(card);
 }
 
-function renderRisultato(app) {
-  const tot = stato.domandeOggi.length;
-  const p = stato.punteggio;
-  const perc = Math.round((p / tot) * 100);
+// ── RISULTATO ─────────────────────────────────────────────
 
-  let emoji, titolo, testo;
-  if (perc === 100) { emoji = '🏆'; titolo = 'Perfetto!'; testo = 'Hai risposto a tutte le domande correttamente. Bravissima!'; }
-  else if (perc >= 60) { emoji = '⭐'; titolo = 'Molto bene!'; testo = 'Hai fatto un ottimo lavoro oggi. Sei fantastica!'; }
-  else { emoji = '💛'; titolo = 'Bravo tentativo!'; testo = 'Ogni giorno si migliora. Domani andrà ancora meglio!'; }
+function renderRisultato(app, tipo, p, tot, extra=''){
+  const perc=Math.round((p/tot)*100);
+  let em,titolo,testo;
+  if(perc===100){em='🏆';titolo='Perfetto!';testo='Tutte le risposte giuste. Sei straordinaria!';}
+  else if(perc>=60){em='⭐';titolo='Molto bene!';testo='Ottimo risultato oggi. Sei fantastica!';}
+  else{em='💛';titolo='Bravo tentativo!';testo='Ogni giorno si migliora. Sei bravissima lo stesso!';}
 
-  const card = document.createElement('div');
-  card.className = 'card score-card';
-  card.innerHTML = `
-    <span class="score-emoji">${emoji}</span>
-    <div class="score-title">${titolo}</div>
-    <div class="score-text">${testo}</div>
-    <span class="score-number">${p} / ${tot} ✓</span>
-  `;
+  const card=document.createElement('div');card.className='card';
+  card.style.textAlign='center';card.style.padding='32px 20px';
+  card.innerHTML=`
+    <span class="result-emoji">${em}</span>
+    <div class="result-title">${titolo}</div>
+    <div class="result-sub">${testo}${extra?'<br><small style="color:var(--text-l)">'+extra+'</small>':''}</div>
+    <span class="result-score">${p} / ${tot}</span>
+    <div class="result-label">risposte corrette</div>`;
 
-  const rigiocaBtn = document.createElement('button');
-  rigiocaBtn.className = 'next-btn';
-  rigiocaBtn.style.marginTop = '24px';
-  rigiocaBtn.textContent = '🎵 Ascolta un po\' di musica';
-  rigiocaBtn.onclick = () => setTab('musica');
-  card.appendChild(rigiocaBtn);
+  const btns=document.createElement('div');btns.className='btn-row';
 
-  const resetBtn = document.createElement('button');
-  resetBtn.style.cssText = 'width:100%;margin-top:10px;padding:16px;background:transparent;border:2.5px solid #E8956D;border-radius:18px;font-family:Nunito,sans-serif;font-size:18px;font-weight:700;color:#C4704A;cursor:pointer;';
-  resetBtn.textContent = '🔄 Rigioca';
-  resetBtn.onclick = () => {
-    stato.domandaIdx = 0;
-    stato.rispostaData = false;
-    stato.rispostaScelta = null;
-    stato.punteggio = 0;
-    stato.quizFinito = false;
-    stato.domandeOggi = getDomandeOggi();
+  const btnMusica=document.createElement('button');btnMusica.className='btn-next';
+  btnMusica.textContent='🎵 Vai alla musica';
+  btnMusica.onclick=()=>{S.tab='musica';render();};
+
+  const btnRigioca=document.createElement('button');btnRigioca.className='btn-outline';
+  btnRigioca.textContent='🔄 Rigioca';
+  btnRigioca.onclick=()=>{
+    if(tipo==='quiz')initQuiz();
+    else if(tipo==='memoria')initMemoria();
+    else if(tipo==='frasi')initFrasi();
     render();
   };
-  card.appendChild(resetBtn);
 
+  const btnStorico=document.createElement('button');btnStorico.className='btn-outline';
+  btnStorico.textContent='📊 Vedi i tuoi progressi';
+  btnStorico.onclick=()=>{S.tab='storico';render();};
+
+  btns.appendChild(btnMusica);btns.appendChild(btnRigioca);btns.appendChild(btnStorico);
+  card.appendChild(btns);
   app.appendChild(card);
 }
 
-function renderMusica(app) {
-  const header = document.createElement('div');
-  header.className = 'card';
-  header.innerHTML = `
-    <div class="music-header">🎵 Le canzoni di oggi</div>
-    <div class="music-sub">Tocca ▶ per ascoltare su YouTube</div>
-  `;
+// ── STORICO ───────────────────────────────────────────────
+
+function calcStreak(storico){
+  if(!storico.length)return 0;
+  const byDay=new Set(storico.map(s=>s.data));
+  const days=[...byDay].sort().reverse();
+  const today=getTodayKey();
+  if(!byDay.has(today))return 0;
+  let streak=1;
+  let d=new Date();
+  for(let i=1;i<60;i++){
+    d.setDate(d.getDate()-1);
+    const key=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+    if(byDay.has(key))streak++;
+    else break;
+  }
+  return streak;
+}
+
+function renderStorico(app){
+  const storico=S.storico;
+  const streak=calcStreak(storico);
+
+  const header=document.createElement('div');header.className='card';
+  // Streak
+  header.innerHTML=`<div class="card-title">📊 I tuoi progressi</div><div class="card-sub">Continua così ogni giorno!</div>`;
+
+  const streakEl=document.createElement('div');streakEl.className='streak-big';
+  streakEl.innerHTML=`
+    <span class="streak-fire">🔥</span>
+    <div class="streak-info">
+      <div class="val">${streak} ${streak===1?'giorno':'giorni'}</div>
+      <div class="lbl">Striscia attuale</div>
+    </div>`;
+  header.appendChild(streakEl);
+
+  // Chart ultimi 7 giorni
+  const chartWrap=document.createElement('div');chartWrap.className='chart-wrap';
+  chartWrap.innerHTML='<div class="chart-title">Punteggi ultimi 7 giorni</div>';
+  const chart=document.createElement('div');chart.className='chart';
+
+  const today=getTodayKey();
+  const d=new Date();
+  for(let i=6;i>=0;i--){
+    const dd=new Date(d);dd.setDate(d.getDate()-i);
+    const key=`${dd.getFullYear()}-${String(dd.getMonth()+1).padStart(2,'0')}-${String(dd.getDate()).padStart(2,'0')}`;
+    const giornoLabel=['Do','Lu','Ma','Me','Gi','Ve','Sa'][dd.getDay()];
+    const giorniRisultati=storico.filter(s=>s.data===key);
+    const avgPerc=giorniRisultati.length
+      ? Math.round(giorniRisultati.reduce((a,s)=>a+(s.punteggio/s.totale)*100,0)/giorniRisultati.length)
+      : 0;
+    const wrap=document.createElement('div');wrap.className='bar-wrap';
+    const col=document.createElement('div');
+    col.className='bar-col '+(avgPerc>0?(key===today?'today':'has-data'):'empty');
+    col.style.height=`${Math.max(avgPerc,4)}%`;
+    const dayL=document.createElement('div');dayL.className='bar-day';dayL.textContent=giornoLabel;
+    const valL=document.createElement('div');valL.className='bar-val';valL.textContent=avgPerc>0?avgPerc+'%':'';
+    wrap.appendChild(valL);wrap.appendChild(col);wrap.appendChild(dayL);
+    chart.appendChild(wrap);
+  }
+  chartWrap.appendChild(chart);
+  header.appendChild(chartWrap);
   app.appendChild(header);
 
-  getCanzoniOggi().forEach((s, i) => {
-    const card = document.createElement('div');
-    card.className = 'song-card';
-    card.style.animationDelay = `${i * 0.08}s`;
-    card.innerHTML = `
-      <div class="song-note">${s.emoji}</div>
-      <div class="song-info">
-        <div class="song-title">${s.titolo}</div>
-        <div class="song-artist">${s.artista}</div>
+  // Lista ultimi giochi
+  if(storico.length>0){
+    const listCard=document.createElement('div');listCard.className='card';
+    listCard.innerHTML='<div class="card-title" style="margin-bottom:14px">Ultime partite</div>';
+    const list=document.createElement('div');list.className='games-list';
+    const icons={'Quiz':'🧩','Memoria':'🃏','Frasi':'📜'};
+    const recent=[...storico].reverse().slice(0,8);
+    recent.forEach(s=>{
+      const perc=Math.round((s.punteggio/s.totale)*100);
+      const row=document.createElement('div');row.className='game-row';
+      row.innerHTML=`
+        <div class="game-row-left">
+          <span class="game-row-icon">${icons[s.tipo]||'🎮'}</span>
+          <div>
+            <div class="game-row-name">${s.tipo}</div>
+            <div class="game-row-date">${s.data}</div>
+          </div>
+        </div>
+        <span class="game-row-score">${perc}%</span>`;
+      list.appendChild(row);
+    });
+    listCard.appendChild(list);
+    app.appendChild(listCard);
+  } else {
+    const empty=document.createElement('div');empty.className='card';
+    empty.innerHTML='<div class="no-data">🌸 Nessuna partita ancora.<br>Inizia a giocare per vedere i tuoi progressi!</div>';
+    app.appendChild(empty);
+  }
+}
+
+// ── MUSICA ────────────────────────────────────────────────
+
+// Aggiungi tab musica al nav — la gestiamo qui
+function renderMusica(app){
+  const header=document.createElement('div');header.className='card';
+  header.innerHTML=`
+    <div class="card-title">🎵 Musica del cuore</div>
+    <div class="card-sub">Tocca ▶ per ascoltare su YouTube</div>`;
+  app.appendChild(header);
+
+  getDailyItems(CANZONI,5,400).forEach((s,i)=>{
+    const row=document.createElement('div');row.className='song-row';
+    row.style.animationDelay=`${i*0.07}s`;
+    row.innerHTML=`
+      <div class="song-em">${s.e}</div>
+      <div class="song-inf">
+        <div class="song-t">${s.t}</div>
+        <div class="song-a">${s.a}</div>
       </div>
-      <span class="song-year">${s.anno}</span>
-      <a href="${s.url}" target="_blank" class="play-btn">▶</a>
-    `;
-    app.appendChild(card);
+      <span class="song-y">${s.y}</span>
+      <a href="${s.url}" target="_blank" class="play-a">▶</a>`;
+    app.appendChild(row);
   });
 
-  // Footer incoraggiamento
-  const nota = document.createElement('div');
-  nota.style.cssText = 'text-align:center;padding:16px;font-size:16px;color:#7A5C45;line-height:1.6;';
-  nota.innerHTML = '💛 La musica fa bene al cuore.<br>Buon ascolto!';
+  const nota=document.createElement('div');nota.className='music-note';
+  nota.innerHTML='💛 La musica fa bene al cuore e alla memoria.<br>Buon ascolto!';
   app.appendChild(nota);
 }
 
-// ── EVENTS ────────────────────────────────────────────────────────────────────
+// Patch nav per aggiungere musica
+const _origRender=render;
+window._renderMusica=renderMusica;
 
-window.setTab = (tab) => { stato.tab = tab; render(); };
+// Override render to support musica tab
+const renderWithMusica=async()=>{
+  const app=document.getElementById('app');
+  app.innerHTML='';
+  S.storico=await loadStorico();
+  const streak=calcStreak(S.storico);
 
-// ── INIT ─────────────────────────────────────────────────────────────────────
+  const h=document.createElement('div');h.className='header';
+  h.innerHTML=`
+    <div class="header-top">
+      <span class="petal">🌸</span>
+      <h1>Il Gioco della Memoria</h1>
+      <span class="petal">🌸</span>
+    </div>
+    <div>
+      <span class="date-tag">📅 ${getDataItaliana()}</span>
+      ${streak>0?`<span class="streak-tag">🔥 ${streak} giorni</span>`:''}
+    </div>`;
+  app.appendChild(h);
 
-stato.domandeOggi = getDomandeOggi();
-render();
+  const nav=document.createElement('div');nav.className='nav';
+  [['quiz','🧩','Quiz'],['memoria','🃏','Memoria'],['frasi','📜','Frasi'],['storico','📊','Storico'],['musica','🎵','Musica']].forEach(([id,icon,label])=>{
+    const btn=document.createElement('button');
+    btn.className='nav-btn'+(S.tab===id?' active':'');
+    btn.innerHTML=`<span class="nav-icon">${icon}</span>${label}`;
+    btn.onclick=()=>{S.tab=id;renderWithMusica();};
+    nav.appendChild(btn);
+  });
+  nav.style.gridTemplateColumns='repeat(5,1fr)';
+  app.appendChild(nav);
+
+  if(S.tab==='quiz')renderQuiz(app);
+  else if(S.tab==='memoria')renderMemoria(app);
+  else if(S.tab==='frasi')renderFrasi(app);
+  else if(S.tab==='storico')renderStorico(app);
+  else if(S.tab==='musica')renderMusica(app);
+};
+
+// Patch all navigation calls
+window.render=renderWithMusica;
+
+// ═══════════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════════
+initQuiz();initMemoria();initFrasi();
+renderWithMusica();
 </script>
 </body>
 </html>
