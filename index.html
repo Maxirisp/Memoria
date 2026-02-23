@@ -4,84 +4,86 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Il Gioco della Memoria 🌸</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
 :root{
-  --cream:#FAF6F0;
-  --warm:#F2E8D9;
-  --warmer:#E8D5BB;
-  --terra:#B5603A;
-  --terra-l:#D4845C;
-  --terra-d:#8A4428;
-  --sage:#7A9E82;
-  --sage-l:#A5C4AC;
-  --gold:#C9943A;
-  --gold-l:#E8BF6A;
-  --text:#2C1A0E;
-  --text-m:#6B4C35;
-  --text-l:#A07858;
-  --white:#FFFFFF;
-  --shadow:rgba(44,26,14,0.10);
-  --shadow-d:rgba(44,26,14,0.18);
+  --cream:#FAF6F0; --warm:#F2E8D9; --warmer:#E8D5BB;
+  --terra:#B5603A; --terra-l:#D4845C; --terra-d:#8A4428;
+  --sage:#7A9E82; --sage-l:#A5C4AC;
+  --gold:#C9943A; --gold-l:#E8BF6A;
+  --sky:#5B8DB8; --sky-l:#85B4D8;
+  --plum:#8B5E8B; --plum-l:#B48AB4;
+  --text:#2C1A0E; --text-m:#6B4C35; --text-l:#A07858;
+  --shadow:rgba(44,26,14,0.10); --shadow-d:rgba(44,26,14,0.18);
   --r:22px;
 }
 html{background:var(--cream);}
 body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);min-height:100vh;overflow-x:hidden;}
-
-/* ── TEXTURE BG ── */
-body::before{
-  content:'';position:fixed;inset:0;
-  background:
-    radial-gradient(ellipse 60% 40% at 80% 10%, #F2E8D966 0%, transparent 70%),
-    radial-gradient(ellipse 50% 60% at 10% 90%, #E8F2EA55 0%, transparent 70%);
-  pointer-events:none;z-index:0;
-}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 60% 40% at 80% 10%,#F2E8D966,transparent 70%),radial-gradient(ellipse 50% 60% at 10% 90%,#E8F2EA55,transparent 70%);pointer-events:none;z-index:0;}
 
 .app{position:relative;z-index:1;max-width:440px;margin:0 auto;padding:0 16px 60px;}
 
-/* ── HEADER ── */
-.header{padding:28px 0 10px;text-align:center;animation:fadeDown .5s ease both;}
-.header-top{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:4px;}
-.header h1{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:700;color:var(--terra);}
-.header .petal{font-size:28px;}
-.date-tag{display:inline-block;background:var(--warm);border:1.5px solid var(--warmer);border-radius:30px;padding:5px 16px;font-size:14px;font-weight:600;color:var(--text-m);letter-spacing:.3px;}
-.streak-tag{display:inline-flex;align-items:center;gap:5px;background:linear-gradient(135deg,#FFF3E0,#FFE0B2);border:1.5px solid #FFCC80;border-radius:30px;padding:5px 14px;font-size:14px;font-weight:700;color:#E65100;margin-left:8px;}
+/* ══ SPLASH ══════════════════════════════════════════════════ */
+.splash{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px 24px;text-align:center;animation:fadeIn .6s ease both;}
+.splash-flower{font-size:52px;display:block;margin-bottom:20px;animation:floatIn .8s cubic-bezier(.34,1.56,.64,1) both;}
+.splash-buongiorno{font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--text-l);margin-bottom:6px;animation:fadeUp .5s .15s ease both;}
+.splash-data{font-size:15px;font-weight:700;color:var(--terra);background:var(--warm);padding:5px 18px;border-radius:20px;display:inline-block;margin-bottom:32px;animation:fadeUp .5s .2s ease both;}
+.splash-quote-card{background:white;border-radius:24px;padding:28px 24px;box-shadow:0 12px 40px var(--shadow-d);width:100%;margin-bottom:28px;border:1.5px solid rgba(201,148,58,.15);animation:fadeUp .5s .3s ease both;}
+.splash-quote-icon{font-size:40px;margin-bottom:14px;display:block;}
+.splash-virgola{font-family:'Cormorant Garamond',serif;font-size:52px;color:var(--gold-l);line-height:.6;display:block;margin-bottom:8px;}
+.splash-frase{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:600;line-height:1.5;color:var(--text);margin-bottom:12px;}
+.splash-autore{font-size:14px;color:var(--text-l);font-style:italic;}
+.splash-divider{width:40px;height:3px;background:linear-gradient(90deg,var(--gold),var(--terra-l));border-radius:2px;margin:14px auto;}
+.splash-bar-wrap{width:100%;height:5px;background:var(--warm);border-radius:10px;overflow:hidden;margin-bottom:10px;animation:fadeUp .5s .5s ease both;}
+.splash-bar{height:100%;background:linear-gradient(90deg,var(--terra),var(--terra-l));border-radius:10px;width:0;transition:width linear;}
+.splash-hint{font-size:14px;color:var(--text-l);animation:fadeUp .5s .6s ease both;margin-bottom:8px;}
+.splash-btn{background:var(--terra);color:white;border:none;border-radius:18px;padding:18px 36px;font-family:'DM Sans',sans-serif;font-size:18px;font-weight:700;cursor:pointer;box-shadow:0 6px 20px rgba(181,96,58,.35);animation:fadeUp .5s .7s ease both;transition:transform .15s;}
+.splash-btn:active{transform:scale(.97);}
 
-/* ── NAV ── */
-.nav{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:16px 0;background:var(--warm);padding:5px;border-radius:18px;animation:fadeUp .4s .1s ease both;}
-.nav-btn{padding:12px 4px;border:none;border-radius:13px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:700;cursor:pointer;transition:all .2s;background:transparent;color:var(--text-l);line-height:1.3;text-align:center;}
-.nav-btn .nav-icon{display:block;font-size:20px;margin-bottom:3px;}
+/* ══ HEADER ══════════════════════════════════════════════════ */
+.header{padding:24px 0 8px;text-align:center;animation:fadeDown .5s ease both;}
+.header-top{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:4px;}
+.header h1{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:700;color:var(--terra);}
+.header .petal{font-size:24px;}
+.date-tag{display:inline-block;background:var(--warm);border:1.5px solid var(--warmer);border-radius:30px;padding:4px 14px;font-size:13px;font-weight:600;color:var(--text-m);}
+.streak-tag{display:inline-flex;align-items:center;gap:4px;background:linear-gradient(135deg,#FFF3E0,#FFE0B2);border:1.5px solid #FFCC80;border-radius:30px;padding:4px 12px;font-size:13px;font-weight:700;color:#E65100;margin-left:6px;}
+
+/* ══ NAV ═════════════════════════════════════════════════════ */
+.nav{display:grid;gap:5px;margin:14px 0;background:var(--warm);padding:5px;border-radius:18px;animation:fadeUp .4s .1s ease both;}
+.nav-btn{padding:10px 4px;border:none;border-radius:13px;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:700;cursor:pointer;transition:all .2s;background:transparent;color:var(--text-l);line-height:1.3;text-align:center;}
+.nav-btn .nav-icon{display:block;font-size:18px;margin-bottom:2px;}
 .nav-btn.active{background:white;color:var(--terra);box-shadow:0 3px 12px var(--shadow-d);}
 
-/* ── CARD ── */
-.card{background:white;border-radius:var(--r);padding:24px 20px;box-shadow:0 6px 28px var(--shadow);margin-bottom:14px;border:1px solid rgba(181,96,58,.07);animation:fadeUp .35s ease both;}
-.card-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;color:var(--terra);margin-bottom:4px;}
-.card-sub{font-size:14px;color:var(--text-l);margin-bottom:18px;}
+/* ══ CARD ════════════════════════════════════════════════════ */
+.card{background:white;border-radius:var(--r);padding:22px 18px;box-shadow:0 6px 28px var(--shadow);margin-bottom:14px;border:1px solid rgba(181,96,58,.07);animation:fadeUp .35s ease both;}
+.card-title{font-family:'Cormorant Garamond',serif;font-size:21px;font-weight:700;color:var(--terra);margin-bottom:4px;}
+.card-sub{font-size:13px;color:var(--text-l);margin-bottom:16px;}
 
-/* ── QUIZ ── */
-.quiz-progress{height:5px;background:var(--warm);border-radius:10px;margin-bottom:20px;overflow:hidden;}
+/* ══ QUIZ ════════════════════════════════════════════════════ */
+.quiz-progress{height:5px;background:var(--warm);border-radius:10px;margin-bottom:18px;overflow:hidden;}
 .quiz-progress-bar{height:100%;background:linear-gradient(90deg,var(--terra),var(--terra-l));border-radius:10px;transition:width .4s ease;}
-.quiz-icon{text-align:center;font-size:76px;margin-bottom:12px;display:block;animation:popIn .4s cubic-bezier(.34,1.56,.64,1) both;}
-.quiz-q{font-family:'Cormorant Garamond',serif;font-size:27px;text-align:center;line-height:1.3;margin-bottom:26px;color:var(--text);}
-.opts{display:flex;flex-direction:column;gap:10px;}
-.opt{padding:18px 20px;border:2px solid var(--warm);border-radius:16px;background:white;font-family:'DM Sans',sans-serif;font-size:19px;font-weight:600;color:var(--text);cursor:pointer;transition:all .18s;text-align:left;}
+.quiz-icon{text-align:center;font-size:72px;margin-bottom:10px;display:block;animation:popIn .4s cubic-bezier(.34,1.56,.64,1) both;}
+.quiz-q{font-family:'Cormorant Garamond',serif;font-size:26px;text-align:center;line-height:1.3;margin-bottom:22px;color:var(--text);}
+.opts{display:flex;flex-direction:column;gap:9px;}
+.opt{padding:17px 18px;border:2px solid var(--warm);border-radius:15px;background:white;font-family:'DM Sans',sans-serif;font-size:18px;font-weight:600;color:var(--text);cursor:pointer;transition:all .18s;text-align:left;}
 .opt:active{transform:scale(.98);}
 .opt.correct{background:#EDF7F0;border-color:#4CAF50;color:#1B5E20;}
 .opt.wrong{background:#FDE8E4;border-color:#E57373;color:#7F0000;}
-.opt.reveal{background:#EDF7F0;border-color:#4CAF50;color:#1B5E20;opacity:.7;}
+.opt.reveal{background:#EDF7F0;border-color:#81C784;color:#2E7D32;opacity:.65;}
 .opt.disabled{cursor:not-allowed;}
-.feedback-bar{margin-top:14px;padding:14px 18px;border-radius:14px;font-size:20px;font-weight:700;text-align:center;animation:popIn .3s ease both;}
+.feedback-bar{margin-top:12px;padding:13px 16px;border-radius:13px;font-size:19px;font-weight:700;text-align:center;animation:popIn .3s ease both;}
 .feedback-bar.ok{background:#EDF7F0;color:#2E7D32;}
 .feedback-bar.ko{background:#FDE8E4;color:#C62828;}
-.btn-next{width:100%;margin-top:12px;padding:18px;background:var(--terra);color:white;border:none;border-radius:16px;font-family:'DM Sans',sans-serif;font-size:18px;font-weight:700;cursor:pointer;box-shadow:0 5px 18px rgba(181,96,58,.35);transition:all .2s;}
+.btn-next{width:100%;margin-top:10px;padding:17px;background:var(--terra);color:white;border:none;border-radius:15px;font-family:'DM Sans',sans-serif;font-size:17px;font-weight:700;cursor:pointer;box-shadow:0 5px 18px rgba(181,96,58,.35);transition:all .2s;}
 .btn-next:active{transform:scale(.98);}
 .btn-next.sage{background:var(--sage);box-shadow:0 5px 18px rgba(122,158,130,.35);}
+.btn-next.sky{background:var(--sky);box-shadow:0 5px 18px rgba(91,141,184,.35);}
 
-/* ── MEMORY GAME ── */
-.mem-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:4px;}
-.mem-card{aspect-ratio:1;border-radius:14px;border:2px solid var(--warm);background:var(--warm);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:36px;transition:all .25s;position:relative;user-select:none;}
-.mem-card .mem-back{font-size:24px;color:var(--text-l);position:absolute;}
+/* ══ MEMORY ══════════════════════════════════════════════════ */
+.mem-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-top:4px;}
+.mem-card{aspect-ratio:1;border-radius:13px;border:2px solid var(--warm);background:var(--warm);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:34px;transition:all .25s;position:relative;user-select:none;}
+.mem-card .mem-back{font-size:22px;color:var(--text-l);position:absolute;}
 .mem-card .mem-front{opacity:0;transition:opacity .2s;}
 .mem-card.flipped{background:white;border-color:var(--terra-l);box-shadow:0 3px 12px var(--shadow);}
 .mem-card.flipped .mem-back{opacity:0;}
@@ -89,84 +91,103 @@ body::before{
 .mem-card.matched{background:linear-gradient(135deg,#EDF7F0,#D4EDDA);border-color:#81C784;cursor:default;}
 .mem-card.matched .mem-front{opacity:1;}
 .mem-card.shake{animation:shake .35s ease;}
-.mem-info{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;}
-.mem-stat{text-align:center;}
-.mem-stat .val{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:700;color:var(--terra);}
-.mem-stat .lbl{font-size:12px;color:var(--text-l);font-weight:600;}
+.mem-info{display:flex;justify-content:space-around;margin-bottom:14px;}
+.mem-stat .val{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:700;color:var(--terra);text-align:center;}
+.mem-stat .lbl{font-size:11px;color:var(--text-l);font-weight:600;text-align:center;}
 
-/* ── COMPLETA ── */
-.frase-container{margin-bottom:20px;}
-.frase-text{font-family:'Cormorant Garamond',serif;font-size:26px;line-height:1.5;text-align:center;color:var(--text);margin-bottom:6px;}
-.frase-autore{text-align:center;font-size:14px;color:var(--text-l);font-style:italic;margin-bottom:22px;}
-.blank{display:inline-block;min-width:90px;border-bottom:3px solid var(--terra);color:var(--terra);font-weight:700;padding:0 4px;vertical-align:bottom;}
-.frase-opts{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
-.frase-opt{padding:16px 12px;border:2px solid var(--warm);border-radius:14px;background:white;font-family:'DM Sans',sans-serif;font-size:18px;font-weight:600;color:var(--text);cursor:pointer;transition:all .18s;text-align:center;}
+/* ══ FRASI ═══════════════════════════════════════════════════ */
+.frase-text{font-family:'Cormorant Garamond',serif;font-size:25px;line-height:1.5;text-align:center;color:var(--text);margin-bottom:6px;}
+.frase-autore{text-align:center;font-size:13px;color:var(--text-l);font-style:italic;margin-bottom:20px;}
+.blank{display:inline-block;min-width:80px;border-bottom:3px solid var(--terra);color:var(--terra);font-weight:700;padding:0 4px;vertical-align:bottom;}
+.frase-opts{display:grid;grid-template-columns:1fr 1fr;gap:9px;}
+.frase-opt{padding:15px 10px;border:2px solid var(--warm);border-radius:14px;background:white;font-family:'DM Sans',sans-serif;font-size:17px;font-weight:600;color:var(--text);cursor:pointer;transition:all .18s;text-align:center;}
 .frase-opt.correct{background:#EDF7F0;border-color:#4CAF50;color:#1B5E20;}
 .frase-opt.wrong{background:#FDE8E4;border-color:#E57373;color:#7F0000;}
-.frase-opt.reveal{background:#EDF7F0;border-color:#4CAF50;opacity:.6;}
+.frase-opt.reveal{background:#EDF7F0;border-color:#81C784;opacity:.6;}
 .frase-opt.disabled{cursor:not-allowed;}
-.frase-counter{text-align:center;font-size:14px;color:var(--text-l);font-weight:600;margin-bottom:16px;}
 
-/* ── SCORE FINALE ── */
-.result-emoji{font-size:80px;display:block;text-align:center;margin-bottom:12px;animation:popIn .4s ease both;}
-.result-title{font-family:'Cormorant Garamond',serif;font-size:32px;text-align:center;color:var(--terra);margin-bottom:6px;}
-.result-sub{text-align:center;font-size:17px;color:var(--text-m);margin-bottom:24px;line-height:1.5;}
-.result-score{text-align:center;font-size:54px;font-weight:800;color:var(--gold);display:block;font-family:'Cormorant Garamond',serif;}
-.result-label{text-align:center;font-size:15px;color:var(--text-l);margin-bottom:24px;}
-.btn-row{display:flex;flex-direction:column;gap:10px;}
-.btn-outline{width:100%;padding:16px;background:transparent;border:2px solid var(--terra-l);border-radius:16px;font-family:'DM Sans',sans-serif;font-size:17px;font-weight:700;color:var(--terra);cursor:pointer;transition:all .2s;}
+/* ══ BUON UMORE (tab) ════════════════════════════════════════ */
+.umore-big{background:linear-gradient(145deg,#FFF8F0,#FFF0E0);border-radius:var(--r);padding:28px 22px;box-shadow:0 8px 32px var(--shadow);margin-bottom:14px;border:1.5px solid rgba(201,148,58,.2);text-align:center;}
+.umore-icon{font-size:52px;display:block;margin-bottom:14px;animation:popIn .5s cubic-bezier(.34,1.56,.64,1) both;}
+.umore-frase{font-family:'Cormorant Garamond',serif;font-size:25px;font-weight:600;line-height:1.5;color:var(--text);margin-bottom:10px;}
+.umore-autore{font-size:14px;color:var(--text-l);font-style:italic;margin-bottom:18px;}
+.umore-div{width:40px;height:3px;background:linear-gradient(90deg,var(--gold),var(--terra-l));border-radius:2px;margin:0 auto 18px;}
+.btn-altra{width:100%;padding:15px;background:transparent;border:2px solid var(--gold);border-radius:15px;font-family:'DM Sans',sans-serif;font-size:16px;font-weight:700;color:var(--gold);cursor:pointer;transition:all .2s;}
+.btn-altra:active{background:#FFF8E1;}
 
-/* ── STORICO ── */
-.storico-header{margin-bottom:18px;}
-.streak-big{display:flex;align-items:center;gap:16px;background:linear-gradient(135deg,#FFF8E1,#FFF3CD);border:1.5px solid #FFE082;border-radius:18px;padding:18px 20px;margin-bottom:14px;}
-.streak-fire{font-size:48px;}
-.streak-info .val{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:700;color:#E65100;}
-.streak-info .lbl{font-size:14px;color:#BF360C;font-weight:600;}
-.chart-wrap{margin-top:6px;}
-.chart-title{font-size:14px;font-weight:700;color:var(--text-l);margin-bottom:10px;text-transform:uppercase;letter-spacing:.5px;}
-.chart{display:flex;align-items:flex-end;gap:8px;height:90px;}
-.bar-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;}
-.bar-col{width:100%;border-radius:8px 8px 0 0;transition:height .5s ease;min-height:4px;}
+/* ══ NUMERI ══════════════════════════════════════════════════ */
+.num-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;}
+.num-lv{background:var(--warm);border-radius:10px;padding:5px 14px;font-size:13px;font-weight:700;color:var(--terra);}
+.num-tentativi{font-size:13px;color:var(--text-l);font-weight:600;}
+.num-display{background:linear-gradient(135deg,#1C0E00,#3A2000);border-radius:20px;padding:30px 20px;text-align:center;margin-bottom:18px;position:relative;overflow:hidden;}
+.num-display::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(201,148,58,.25),transparent 65%);}
+.num-seq{font-family:'Cormorant Garamond',serif;font-size:46px;font-weight:700;color:#FFD580;letter-spacing:10px;position:relative;transition:opacity .4s,filter .4s;}
+.num-seq.hidden{opacity:0;filter:blur(8px);}
+.num-sub{font-size:13px;color:rgba(255,213,128,.55);margin-top:8px;font-weight:600;position:relative;}
+.num-phase-label{font-size:12px;text-transform:uppercase;letter-spacing:.8px;color:rgba(255,213,128,.4);position:relative;margin-bottom:6px;}
+.num-keypad{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px;}
+.num-key{padding:20px 10px;border:2px solid var(--warm);border-radius:16px;background:white;font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:700;color:var(--text);cursor:pointer;transition:all .15s;text-align:center;}
+.num-key:active{background:var(--warm);transform:scale(.95);}
+.num-key.del{font-size:20px;color:var(--terra);}
+.num-key.ok{background:var(--terra);color:white;border-color:var(--terra);font-family:'DM Sans',sans-serif;font-size:17px;font-weight:700;box-shadow:0 4px 14px rgba(181,96,58,.35);}
+.num-risposta{font-family:'Cormorant Garamond',serif;font-size:36px;letter-spacing:8px;text-align:center;padding:14px;background:var(--warm);border-radius:14px;margin-bottom:14px;min-height:64px;color:var(--text);font-weight:700;}
+.num-risposta.placeholder{color:var(--text-l);font-size:18px;letter-spacing:0;font-family:'DM Sans',sans-serif;display:flex;align-items:center;justify-content:center;}
+.num-istruzioni{text-align:center;font-size:15px;color:var(--text-m);margin-bottom:16px;font-weight:600;}
+
+/* ══ STORICO ═════════════════════════════════════════════════ */
+.streak-big{display:flex;align-items:center;gap:14px;background:linear-gradient(135deg,#FFF8E1,#FFF3CD);border:1.5px solid #FFE082;border-radius:18px;padding:16px 18px;margin-bottom:14px;}
+.streak-fire{font-size:44px;}
+.streak-info .val{font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:700;color:#E65100;}
+.streak-info .lbl{font-size:13px;color:#BF360C;font-weight:600;}
+.chart{display:flex;align-items:flex-end;gap:7px;height:80px;margin-top:8px;}
+.bar-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;}
+.bar-col{width:100%;border-radius:7px 7px 0 0;min-height:4px;}
 .bar-col.has-data{background:linear-gradient(180deg,var(--terra-l),var(--terra));}
 .bar-col.today{background:linear-gradient(180deg,var(--gold-l),var(--gold));box-shadow:0 0 10px rgba(201,148,58,.4);}
 .bar-col.empty{background:var(--warm);}
-.bar-day{font-size:11px;color:var(--text-l);font-weight:600;}
-.bar-val{font-size:12px;font-weight:700;color:var(--terra);}
-.games-list{margin-top:14px;}
-.game-row{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:var(--warm);border-radius:14px;margin-bottom:8px;}
-.game-row-left{display:flex;align-items:center;gap:12px;}
-.game-row-icon{font-size:28px;}
-.game-row-name{font-weight:700;font-size:16px;color:var(--text);}
-.game-row-date{font-size:12px;color:var(--text-l);}
+.bar-day{font-size:10px;color:var(--text-l);font-weight:600;}
+.bar-val{font-size:11px;font-weight:700;color:var(--terra);}
+.game-row{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;background:var(--warm);border-radius:13px;margin-bottom:8px;}
+.game-row-left{display:flex;align-items:center;gap:10px;}
+.game-row-icon{font-size:26px;}
+.game-row-name{font-weight:700;font-size:15px;color:var(--text);}
+.game-row-date{font-size:11px;color:var(--text-l);}
 .game-row-score{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;color:var(--gold);}
-.no-data{text-align:center;padding:32px 20px;color:var(--text-l);font-size:16px;line-height:1.6;}
+.no-data{text-align:center;padding:28px 16px;color:var(--text-l);font-size:15px;line-height:1.6;}
 
-/* ── MUSICA ── */
-.song-row{display:flex;align-items:center;gap:14px;padding:16px;background:white;border-radius:18px;box-shadow:0 4px 18px var(--shadow);margin-bottom:10px;border:1px solid rgba(181,96,58,.07);animation:fadeUp .3s ease both;}
-.song-em{font-size:34px;min-width:46px;text-align:center;}
+/* ══ MUSICA ══════════════════════════════════════════════════ */
+.song-row{display:flex;align-items:center;gap:12px;padding:14px;background:white;border-radius:16px;box-shadow:0 4px 18px var(--shadow);margin-bottom:10px;border:1px solid rgba(181,96,58,.07);animation:fadeUp .3s ease both;}
+.song-em{font-size:32px;min-width:44px;text-align:center;}
 .song-inf{flex:1;}
-.song-t{font-weight:700;font-size:17px;color:var(--text);}
-.song-a{font-size:13px;color:var(--text-l);margin-top:2px;}
-.song-y{font-size:12px;background:var(--warm);color:var(--text-m);padding:2px 9px;border-radius:8px;font-weight:700;white-space:nowrap;}
-.play-a{display:flex;align-items:center;justify-content:center;background:var(--terra);color:white;border-radius:50%;width:44px;height:44px;font-size:16px;text-decoration:none;box-shadow:0 3px 10px rgba(181,96,58,.35);flex-shrink:0;transition:transform .15s;}
+.song-t{font-weight:700;font-size:16px;color:var(--text);}
+.song-a{font-size:12px;color:var(--text-l);margin-top:2px;}
+.song-y{font-size:11px;background:var(--warm);color:var(--text-m);padding:2px 8px;border-radius:7px;font-weight:700;white-space:nowrap;}
+.play-a{display:flex;align-items:center;justify-content:center;background:var(--terra);color:white;border-radius:50%;width:42px;height:42px;font-size:15px;text-decoration:none;box-shadow:0 3px 10px rgba(181,96,58,.35);flex-shrink:0;transition:transform .15s;}
 .play-a:active{transform:scale(.93);}
-.music-note{text-align:center;padding:18px;font-size:15px;color:var(--text-l);line-height:1.7;}
 
-/* ── ANIMATIONS ── */
-@keyframes fadeDown{from{opacity:0;transform:translateY(-16px)}to{opacity:1;transform:translateY(0)}}
-@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+/* ══ RISULTATO ═══════════════════════════════════════════════ */
+.result-emoji{font-size:76px;display:block;text-align:center;margin-bottom:10px;animation:popIn .4s ease both;}
+.result-title{font-family:'Cormorant Garamond',serif;font-size:30px;text-align:center;color:var(--terra);margin-bottom:6px;}
+.result-sub{text-align:center;font-size:16px;color:var(--text-m);margin-bottom:22px;line-height:1.5;}
+.result-score{text-align:center;font-size:52px;font-weight:800;color:var(--gold);display:block;font-family:'Cormorant Garamond',serif;}
+.result-label{text-align:center;font-size:14px;color:var(--text-l);margin-bottom:22px;}
+.btn-outline{width:100%;padding:15px;background:transparent;border:2px solid var(--terra-l);border-radius:15px;font-family:'DM Sans',sans-serif;font-size:16px;font-weight:700;color:var(--terra);cursor:pointer;transition:all .2s;margin-top:8px;}
+
+/* ══ ANIMATIONS ══════════════════════════════════════════════ */
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes fadeDown{from{opacity:0;transform:translateY(-14px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes floatIn{from{opacity:0;transform:scale(.5) translateY(20px)}to{opacity:1;transform:scale(1) translateY(0)}}
 @keyframes popIn{from{opacity:0;transform:scale(.6)}to{opacity:1;transform:scale(1)}}
 @keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}
-@keyframes confetti{0%{opacity:1;transform:translateY(0) rotate(0)}100%{opacity:0;transform:translateY(80px) rotate(360deg)}}
 </style>
 </head>
 <body>
 <div class="app" id="app"></div>
-
 <script>
-// ═══════════════════════════════════════════════════════════
-// DATA
-// ═══════════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════════
+// DATI
+// ══════════════════════════════════════════════════════════════
 
 const QUIZ_POOL = [
   {icon:'🐱',q:'Che animale fa "Miao"?',r:['Il Gatto','Il Cane','Il Coniglio'],c:0},
@@ -175,38 +196,155 @@ const QUIZ_POOL = [
   {icon:'🐔',q:'Che animale fa le uova?',r:['La Gallina','Il Coniglio','Il Cavallo'],c:0},
   {icon:'🐝',q:'Chi produce il miele?',r:['La Farfalla',"L'Ape",'Il Grillo'],c:1},
   {icon:'🦁',q:'Come si chiama "il re degli animali"?',r:['Il Leone','La Tigre',"L'Elefante"],c:0},
+  {icon:'🐟',q:'Dove vive il pesce?',r:['Nel bosco','In montagna','Nel mare'],c:2},
+  {icon:'🐘',q:"Qual è l'animale con la proboscide?",r:['Il Rinoceronte',"L'Ippopotamo","L'Elefante"],c:2},
+  {icon:'🦋',q:'Come si chiama il bruco che diventa insetto colorato?',r:['La Farfalla','La Libellula','La Coccinella'],c:0},
+  {icon:'🐢',q:'Quale animale ha il guscio duro e cammina lentamente?',r:['La Lumaca','La Tartaruga','Il Granchio'],c:1},
+  {icon:'🦊',q:'Quale animale rosso vive nel bosco ed è molto furbo?',r:['Il Lupo','La Volpe','Il Cervo'],c:1},
+  {icon:'🐇',q:'Quale animale salta e ha le orecchie lunghe?',r:['Il Topo','Il Coniglio','Lo Scoiattolo'],c:1},
+  {icon:'🐓',q:'Quale animale canta al mattino per svegliare tutti?',r:['Il Gallo','Il Gufo','Il Corvo'],c:0},
+  {icon:'🐬',q:'Quale animale intelligente vive nel mare e salta?',r:['Lo Squalo','Il Delfino','La Balena'],c:1},
+  {icon:'🦅',q:'Quale grande uccello vola in montagna?',r:["L'Aquila",'Il Passero','La Rondine'],c:0},
   {icon:'🌹',q:'Di che colore è una rosa classica?',r:['Blu','Rossa','Verde'],c:1},
   {icon:'☀️',q:'Di che colore è il sole?',r:['Giallo','Verde','Viola'],c:0},
   {icon:'🌊',q:'Di che colore è il mare?',r:['Rosso','Blu','Arancione'],c:1},
   {icon:'🍎',q:'Di che colore è una mela matura?',r:['Rossa','Blu','Nera'],c:0},
   {icon:'🍋',q:'Di che colore è il limone?',r:['Verde','Arancione','Giallo'],c:2},
+  {icon:'🌿',q:"Di che colore è l'erba?",r:['Verde','Marrone','Giallo'],c:0},
+  {icon:'🍇',q:'Di che colore sono i mirtilli?',r:['Rossi','Blu scuro / viola','Arancioni'],c:1},
+  {icon:'🥕',q:'Di che colore è la carota?',r:['Gialla','Rossa','Arancione'],c:2},
+  {icon:'☁️',q:'Di che colore sono le nuvole quando sta per piovere?',r:['Bianche','Grigie','Rosa'],c:1},
+  {icon:'🌻',q:'Di che colore è il girasole?',r:['Rosso','Giallo','Viola'],c:1},
   {icon:'⌚',q:"Cosa si mette al polso per sapere l'ora?",r:["L'Anello","L'Orologio","Il Braccialetto"],c:1},
-  {icon:'☕',q:'In quale tazzina si beve il caffè?',r:['Nel Bicchiere','Nella Tazzina','Nel Piatto'],c:1},
+  {icon:'☕',q:'In cosa si beve il caffè?',r:['Nel Bicchiere','Nella Tazzina','Nel Piatto'],c:1},
   {icon:'🛏️',q:'Dove si dorme la notte?',r:['Sul Divano','In Cucina','Nel Letto'],c:2},
+  {icon:'🌂',q:'Cosa si usa quando piove?',r:['Il Cappello di Paglia',"L'Ombrello",'I Guanti'],c:1},
+  {icon:'🪞',q:'In cosa ci si specchia?',r:['Nel Quadro','Nel Vetro','Nello Specchio'],c:2},
+  {icon:'📚',q:'Con cosa si legge una storia?',r:['Con un Fiore','Con un Libro','Con una Forchetta'],c:1},
+  {icon:'🍴',q:'Con cosa si mangia la pasta?',r:['Con il Cucchiaio','Con la Forchetta','Con le Mani'],c:1},
+  {icon:'🪥',q:'Con cosa ci si lavano i denti?',r:['Con il Pettine','Con lo Spazzolino','Con la Spugna'],c:1},
+  {icon:'🔑',q:'Cosa si usa per aprire la porta di casa?',r:['La Chiave','Il Martello','La Forbice'],c:0},
+  {icon:'📞',q:'Con cosa si telefona a un amico?',r:['Con la Radio','Con il Telefono','Con la Televisione'],c:1},
   {icon:'🌸',q:'In quale stagione sbocciano i fiori?',r:['In Inverno','In Primavera','In Autunno'],c:1},
   {icon:'❄️',q:'In quale stagione cade la neve?',r:['In Estate','In Primavera','In Inverno'],c:2},
-  {icon:'🍕',q:'Quale cibo tipico ha la forma rotonda e si cuoce nel forno?',r:['Il Risotto','La Pizza','La Pasta'],c:1},
+  {icon:'🌊',q:'In quale stagione si va al mare?',r:['In Estate','In Autunno','In Inverno'],c:0},
+  {icon:'🍂',q:'In quale stagione cadono le foglie dagli alberi?',r:['In Primavera','In Autunno','In Estate'],c:1},
+  {icon:'🌈',q:'Quando appare il Arcobaleno?',r:['Quando fa caldo','Dopo la pioggia','Di notte'],c:1},
+  {icon:'🌙',q:'Cosa si vede di notte in cielo?',r:['Il Sole','La Luna','Le Nuvole colorate'],c:1},
+  {icon:'🍕',q:'Quale cibo tipico italiano ha la forma rotonda e si cuoce nel forno?',r:['Il Risotto','La Pizza','La Pasta'],c:1},
+  {icon:'🍝',q:'Come si chiama il piatto di pasta più famoso?',r:['La Polenta','Gli Spaghetti','Il Panino'],c:1},
   {icon:'🫒',q:"Da cosa si ricava l'olio d'oliva?",r:['Dal Pomodoro','Dalle Olive','Dal Limone'],c:1},
+  {icon:'🍞',q:'Cosa si compra dal fornaio?',r:['La Pasta','Il Pane','Il Latte'],c:1},
+  {icon:'🧀',q:'Quale alimento si ottiene dal latte stagionato?',r:['Il Burro','Il Formaggio','La Panna'],c:1},
+  {icon:'🍅',q:'Quale verdura rossa si usa per fare il sugo della pasta?',r:['La Carota','Il Pomodoro','La Cipolla'],c:1},
+  {icon:'🍦',q:'Cosa si mangia quando fa caldo dalla gelateria?',r:['La Torta','Il Gelato','I Biscotti'],c:1},
+  {icon:'🥚',q:'Quale alimento lo fanno le galline?',r:['Il Latte','Il Miele',"L'Uovo"],c:2},
+  {icon:'🍇',q:"Da cosa si fa il vino?",r:["Dall'Arancia","Dall'Uva","Dal Limone"],c:1},
   {icon:'🎄',q:'Che festa si celebra il 25 dicembre?',r:['La Pasqua','Il Carnevale','Il Natale'],c:2},
-  {icon:'🐟',q:'Dove vive il pesce?',r:['Nel bosco','In montagna','Nel mare'],c:2},
+  {icon:'🐣',q:'Che festa si celebra in primavera con le uova di cioccolato?',r:['Il Natale','La Pasqua','La Befana'],c:1},
+  {icon:'🧦',q:'Quale vecchietta porta i doni ai bambini il 6 gennaio?',r:['La Befana','La Nonna','La Fatina'],c:0},
+  {icon:'🏛️',q:'In quale città si trovano il Colosseo e il Vaticano?',r:['Milano','Napoli','Roma'],c:2},
+  {icon:'🗼',q:'In quale città italiana si trova la Torre Pendente?',r:['Venezia','Pisa','Firenze'],c:1},
+  {icon:'⛵',q:'In quale città italiana si usano le gondole?',r:['Genova','Venezia','Trieste'],c:1},
+  {icon:'🎭',q:'Come si chiama la famosa maschera italiana della commedia?',r:['Pulcinella','Arlecchino','Colombina'],c:1},
+  {icon:'🌋',q:"Qual è il vulcano più famoso d'Italia vicino a Napoli?",r:['Lo Stromboli','Il Vesuvio','L\'Etna'],c:1},
+  {icon:'🏔️',q:"Quale catena montuosa si trova a nord dell'Italia?",r:['Gli Appennini','Le Alpi','I Pirenei'],c:1},
+  {icon:'🌊',q:"Quale mare bagna la costa ovest dell'Italia?",r:['Il Mar Adriatico','Il Mar Tirreno','Il Mar Egeo'],c:1},
+  {icon:'🍊',q:"Quale frutto tipico siciliano è arancione e succoso?",r:["Il Limone","L'Arancia","Il Mandarino"],c:1},
 ];
 
 const MEMORIA_PAIRS = [
   ['🌹','🌹'],['🍕','🍕'],['☀️','☀️'],['🐱','🐱'],
   ['🎵','🎵'],['⭐','⭐'],['🌊','🌊'],['🍋','🍋'],
+  ['🦋','🦋'],['🍎','🍎'],['🌸','🌸'],['🏆','🏆'],
+  ['🐶','🐶'],['🎂','🎂'],['🌈','🌈'],['🍓','🍓'],
+  ['🦁','🦁'],['🌙','🌙'],['🍦','🍦'],['🎀','🎀'],
 ];
 
 const FRASI_POOL = [
   {testo:'Volare, oh oh, cantare, oh oh oh oh, nel _____ dipinto di blu',parola:'blu',opz:['blu','verde','rosso','giallo'],c:0,autore:'Domenico Modugno – Nel blu dipinto di blu'},
-  {testo:"Nel mezzo del cammin di nostra _____",parola:'vita',opz:['vita','strada','notte','avventura'],c:0,autore:'Dante Alighieri – Divina Commedia'},
-  {testo:"Chi va piano, va _____ e va lontano",parola:'sano',opz:['sano','forte','bene','lento'],c:0,autore:'Proverbio italiano'},
   {testo:"Azzurro, il pomeriggio è troppo _____",parola:'lungo',opz:['lungo','caldo','bello','corto'],c:0,autore:'Adriano Celentano – Azzurro'},
-  {testo:"Il cielo in una _____, stanza",parola:'stanza',opz:['stanza','camera','casa','notte'],c:0,autore:'Gino Paoli – Il cielo in una stanza'},
+  {testo:"Il cielo in una _____ stanza",parola:'stanza',opz:['stanza','camera','casa','notte'],c:0,autore:'Gino Paoli – Il cielo in una stanza'},
+  {testo:"Sapore di _____, sapore di mare",parola:'sale',opz:['sale','vento','sole','sabbia'],c:0,autore:'Gino Paoli – Sapore di sale'},
+  {testo:"Come _____, più di ieri, meno di domani",parola:'prima',opz:['prima','sempre','adesso','mai'],c:0,autore:'Tony Dallara – Come prima'},
+  {testo:"Torna a _____, lasciami vivere",parola:'Surriento',opz:['Surriento','Napoli','casa','te'],c:0,autore:'Canzone napoletana – Torna a Surriento'},
+  {testo:"Il _____ gira per chi ha voglia di sognare",parola:'mondo',opz:['mondo','vento','tempo','cuore'],c:0,autore:'Jimmy Fontana – Il mondo'},
+  {testo:"'O sole mio sta 'nfronte a _____",parola:'te',opz:['te','me','noi','lui'],c:0,autore:"Canzone napoletana – O Sole Mio"},
+  {testo:"Chi va piano, va _____ e va lontano",parola:'sano',opz:['sano','forte','bene','lento'],c:0,autore:'Proverbio italiano'},
   {testo:"Paese che vai, usanza che _____",parola:'trovi',opz:['trovi','vedi','senti','porti'],c:0,autore:'Proverbio italiano'},
-  {testo:"A Napoli non si può vivere senza _____ di mare",parola:'sole',opz:['sole','aria','odore','vista'],c:0,autore:'Tradizione napoletana'},
   {testo:"Non tutte le _____ vengono per nuocere",parola:'ciambelle',opz:['ciambelle','torte','cose','nuvole'],c:0,autore:'Proverbio italiano'},
   {testo:"Roma non fu costruita in un _____",parola:'giorno',opz:['giorno','anno','secolo','attimo'],c:0,autore:'Proverbio italiano'},
   {testo:"Il mattino ha _____ in bocca",parola:"l'oro",opz:["l'oro",'la forza','il pane','la luce'],c:0,autore:'Proverbio italiano'},
+  {testo:"Chi dorme non piglia _____",parola:'pesci',opz:['pesci','niente','fortuna','sonno'],c:0,autore:'Proverbio italiano'},
+  {testo:"Tra il dire e il fare c'è di mezzo il _____",parola:'mare',opz:['mare','mondo','tempo','lavoro'],c:0,autore:'Proverbio italiano'},
+  {testo:"L'unione fa la _____",parola:'forza',opz:['forza','pace','vita','famiglia'],c:0,autore:'Proverbio italiano'},
+  {testo:"Tutto è bene quel che _____ bene",parola:'finisce',opz:['finisce','inizia','va','resta'],c:0,autore:'Proverbio italiano'},
+  {testo:"A buon intenditor, poche _____",parola:'parole',opz:['parole','cose','idee','ore'],c:0,autore:'Proverbio italiano'},
+  {testo:"Nel mezzo del cammin di nostra _____",parola:'vita',opz:['vita','strada','notte','avventura'],c:0,autore:'Dante Alighieri – Divina Commedia'},
+  {testo:"Essere o non essere, questo è il _____",parola:'problema',opz:['problema','dilemma','punto','segreto'],c:0,autore:'Shakespeare – Amleto'},
+  {testo:"Veni, vidi, _____",parola:'vici',opz:['vici','fugi','dixi','feci'],c:0,autore:'Giulio Cesare'},
+  {testo:"Dove c'è un _____, c'è un modo",parola:'volere',opz:['volere','sogno','cuore','amore'],c:0,autore:'Proverbio italiano'},
+  {testo:"Chi semina _____, raccoglie tempesta",parola:'vento',opz:['vento','male','odio','niente'],c:0,autore:'Proverbio italiano'},
+  {testo:"Che sarà, che sarà, della mia _____",parola:'vita',opz:['vita','casa','terra','gente'],c:0,autore:'José Feliciano – Che sarà'},
+  {testo:"Funiculi, funicula, sta sera io sono _____",parola:'salito',opz:['salito','partito','andato','venuto'],c:0,autore:'Luigi Denza – Funiculi Funicula'},
+  {testo:"La vita è bella quando la si _____",parola:'ama',opz:['ama','vive','sogna','cerca'],c:0,autore:'Proverbio italiano'},
+  {testo:"Tutto scorre, niente _____",parola:'resta',opz:['resta','finisce','cambia','dura'],c:0,autore:'Eraclito'},
+  {testo:"Il cuore ha le sue ragioni che la _____ non conosce",parola:'ragione',opz:['ragione','mente','testa','logica'],c:0,autore:'Blaise Pascal'},
+  {testo:"Non è mai troppo tardi per essere quello che avresti potuto _____",parola:'essere',opz:['essere','fare','diventare','volere'],c:0,autore:'George Eliot'},
+  {testo:"La felicità non è una destinazione, è un modo di _____",parola:'viaggiare',opz:['viaggiare','vivere','pensare','essere'],c:0,autore:'Proverbio'},
+];
+
+const FRASI_BUONUMORE = [
+  {frase:"Ogni mattina abbiamo due scelte: continuare a dormire con i nostri sogni, o svegliarci e inseguirli.",autore:"Proverbio",icon:"🌅"},
+  {frase:"La vita è come una bicicletta: devi pedalare per non cadere.",autore:"Albert Einstein",icon:"🚲"},
+  {frase:"Non importa quanto lentamente vai, purché tu non ti fermi.",autore:"Confucio",icon:"🐢"},
+  {frase:"La gioia non si trova nelle cose che si possiedono, ma in ciò che si osa fare.",autore:"Charles Baudelaire",icon:"🌸"},
+  {frase:"Ogni giorno è una nuova possibilità. Puoi costruire sulla ieri o puoi iniziare tutto da zero.",autore:"Anonimo",icon:"✨"},
+  {frase:"Sorridi, anche se sei stanco. Sorridi, anche se sei ferito. Un sorriso può cambiare tutto.",autore:"Proverbio",icon:"😊"},
+  {frase:"Il segreto per andare avanti è iniziare.",autore:"Mark Twain",icon:"🚀"},
+  {frase:"La vita è breve. Sorridi finché hai ancora i denti.",autore:"Proverbio",icon:"😄"},
+  {frase:"Credi in te stesso e in tutto quello che sei. Sappi che c'è qualcosa dentro di te che è più grande di qualsiasi ostacolo.",autore:"Christian D. Larson",icon:"💪"},
+  {frase:"Oggi è un buon giorno per avere un buon giorno.",autore:"Anonimo",icon:"☀️"},
+  {frase:"Le difficoltà nella vita hanno lo scopo di farci crescere, non di fermarci.",autore:"Paulo Coelho",icon:"🌱"},
+  {frase:"Non cercare di essere perfetto. Cerca di essere autentico.",autore:"Anonimo",icon:"💛"},
+  {frase:"La felicità è un modo di viaggiare, non una destinazione.",autore:"Roy M. Goodman",icon:"🗺️"},
+  {frase:"Ogni alba è un invito a illuminare il mondo di fronte a noi.",autore:"Rumi",icon:"🌄"},
+  {frase:"Non rimpiangere ieri. La vita è in te oggi, fanne uso.",autore:"L. Ron Hubbard",icon:"🌟"},
+  {frase:"La vita è bella per chi sa apprezzare le piccole cose.",autore:"Proverbio",icon:"🌺"},
+  {frase:"Sii il cambiamento che vuoi vedere nel mondo.",autore:"Gandhi",icon:"🕊️"},
+  {frase:"Chi ha salute ha speranza; e chi ha speranza ha tutto.",autore:"Proverbio arabo",icon:"❤️"},
+  {frase:"Le cose belle arrivano a chi aspetta, ma solo quelle che lasciano gli altri affannati.",autore:"Abraham Lincoln",icon:"⏳"},
+  {frase:"Il cuore vede più lontano degli occhi.",autore:"Proverbio",icon:"👁️"},
+  {frase:"La gratitudine trasforma quello che abbiamo in abbastanza.",autore:"Anonimo",icon:"🙏"},
+  {frase:"Una giornata senza sorriso è una giornata perduta.",autore:"Charlie Chaplin",icon:"🎩"},
+  {frase:"Non è importante quante volte cadi, ma quante volte riesci ad alzarti.",autore:"Nelson Mandela",icon:"🦅"},
+  {frase:"Inizia dove sei. Usa quello che hai. Fai quello che puoi.",autore:"Arthur Ashe",icon:"🎯"},
+  {frase:"La vita è ciò che ti accade mentre sei occupato a fare altri piani.",autore:"John Lennon",icon:"🎵"},
+  {frase:"Il modo migliore per predire il futuro è crearlo.",autore:"Peter Drucker",icon:"🔮"},
+  {frase:"Ama la vita che vivi. Vivi la vita che ami.",autore:"Bob Marley",icon:"🌈"},
+  {frase:"Ogni giorno porta con sé centoquattromila secondi di possibilità.",autore:"Anonimo",icon:"⏰"},
+  {frase:"Il sole splende per tutti, ma tocca a noi aprire le finestre.",autore:"Proverbio",icon:"🪟"},
+  {frase:"La cosa più bella del futuro è che arriva un giorno alla volta.",autore:"Abraham Lincoln",icon:"📅"},
+  {frase:"Non aspettare il momento perfetto. Prendi il momento e rendilo perfetto.",autore:"Zoey Sayward",icon:"💫"},
+  {frase:"Un piccolo progresso ogni giorno porta a grandi risultati.",autore:"Anonimo",icon:"📈"},
+  {frase:"La vita è un'avventura audace, o non è niente.",autore:"Helen Keller",icon:"🗺️"},
+  {frase:"Il rimpianto più grande è non aver osato abbastanza.",autore:"Anonimo",icon:"🌙"},
+  {frase:"Sii grato per quello che hai, mentre lavori per quello che vuoi.",autore:"Helen Keller",icon:"🌻"},
+  {frase:"La dolcezza della vita sta nelle piccole cose di ogni giorno.",autore:"Proverbio italiano",icon:"🍯"},
+  {frase:"Non c'è strada troppo lunga per chi avanza senza fretta.",autore:"Seneca",icon:"🛤️"},
+  {frase:"La forza non viene dalla capacità fisica, ma dalla volontà indomita.",autore:"Gandhi",icon:"🌊"},
+  {frase:"Ogni momento è un nuovo inizio.",autore:"T.S. Eliot",icon:"🔄"},
+  {frase:"Vivi come se dovessi morire domani, impara come se dovessi vivere per sempre.",autore:"Gandhi",icon:"📖"},
+  {frase:"Il meglio deve ancora venire.",autore:"Proverbio",icon:"⭐"},
+  {frase:"Ridere è la distanza più breve tra due persone.",autore:"Victor Borge",icon:"😂"},
+  {frase:"Chi trova un amico trova un tesoro.",autore:"Proverbio italiano",icon:"💎"},
+  {frase:"L'amicizia raddoppia le gioie e dimezza le tristezze.",autore:"Francis Bacon",icon:"🤝"},
+  {frase:"Le cose migliori della vita non sono cose.",autore:"Art Buchwald",icon:"💝"},
+  {frase:"Un abbraccio vale mille parole.",autore:"Proverbio",icon:"🤗"},
+  {frase:"La memoria del cuore elimina i brutti ricordi e magnifica quelli belli.",autore:"Gabriel García Márquez",icon:"💖"},
+  {frase:"Ogni giorno è un regalo. Per questo si chiama 'il presente'.",autore:"Anonimo",icon:"🎁"},
+  {frase:"Anche il più lungo dei viaggi inizia con un singolo passo.",autore:"Lao Tzu",icon:"👣"},
+  {frase:"La cosa più bella di svegliarsi ogni mattina è sapere che c'è sempre qualcuno che ti vuole bene.",autore:"Anonimo",icon:"🌷"},
 ];
 
 const CANZONI = [
@@ -220,557 +358,521 @@ const CANZONI = [
   {t:'Funiculi Funicula',a:'Luigi Denza',y:'1880',e:'🚠',url:'https://www.youtube.com/results?search_query=Funiculi+Funicula'},
   {t:'Come prima',a:'Tony Dallara',y:'1958',e:'💛',url:'https://www.youtube.com/results?search_query=Come+prima+Tony+Dallara'},
   {t:'Nel blu dipinto di blu',a:'Domenico Modugno',y:'1958',e:'🎵',url:'https://www.youtube.com/results?search_query=Nel+blu+dipinto+di+blu+Modugno'},
+  {t:'Che sarà',a:'José Feliciano',y:'1971',e:'🌺',url:'https://www.youtube.com/results?search_query=Che+sara+Jose+Feliciano'},
+  {t:'Reginella',a:'Canzone Napoletana',y:'1917',e:'👑',url:'https://www.youtube.com/results?search_query=Reginella+canzone+napoletana'},
 ];
 
-// ═══════════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════════
 // STORAGE
-// ═══════════════════════════════════════════════════════════
-
-const STORAGE_KEY = 'memoria-storico-v2';
-
-async function loadStorico() {
-  try {
-    const r = await window.storage.get(STORAGE_KEY);
-    return r ? JSON.parse(r.value) : [];
-  } catch(e) { return []; }
+// ══════════════════════════════════════════════════════════════
+const STORAGE_KEY='memoria-storico-v3';
+async function loadStorico(){try{const r=await window.storage.get(STORAGE_KEY);return r?JSON.parse(r.value):[]}catch(e){return[]}}
+async function saveRisultato(tipo,punteggio,totale){
+  try{
+    const s=await loadStorico();
+    s.push({tipo,punteggio,totale,data:getTodayKey(),ts:Date.now()});
+    await window.storage.set(STORAGE_KEY,JSON.stringify(s.slice(-150)));
+  }catch(e){}
 }
+function getTodayKey(){const d=new Date();return`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`}
 
-async function saveRisultato(tipo, punteggio, totale) {
-  try {
-    const storico = await loadStorico();
-    storico.push({tipo, punteggio, totale, data: getTodayKey(), ts: Date.now()});
-    // Mantieni solo ultimi 100
-    const trimmed = storico.slice(-100);
-    await window.storage.set(STORAGE_KEY, JSON.stringify(trimmed));
-  } catch(e) {}
-}
-
-function getTodayKey() {
-  const d = new Date();
-  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
-}
-
-// ═══════════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════════
 // HELPERS
-// ═══════════════════════════════════════════════════════════
-
-function seededShuffle(arr, seed) {
-  const a = [...arr];
-  let h = seed;
-  for (let i = a.length-1; i>0; i--) {
-    h = (h*1664525+1013904223)&0xffffffff;
-    const j = Math.abs(h) % (i+1);
-    [a[i],a[j]] = [a[j],a[i]];
-  }
+// ══════════════════════════════════════════════════════════════
+function seededShuffle(arr,seed){
+  const a=[...arr];let h=seed;
+  for(let i=a.length-1;i>0;i--){h=(h*1664525+1013904223)&0xffffffff;const j=Math.abs(h)%(i+1);[a[i],a[j]]=[a[j],a[i]];}
   return a;
 }
-
-function getDailySeed() {
-  const d = new Date();
-  return d.getFullYear()*10000 + (d.getMonth()+1)*100 + d.getDate();
-}
-
-function getDailyItems(pool, n, saltOffset=0) {
-  return seededShuffle(pool, getDailySeed()+saltOffset).slice(0,n);
-}
-
-function getDataItaliana() {
+function getDailySeed(){const d=new Date();return d.getFullYear()*10000+(d.getMonth()+1)*100+d.getDate();}
+function getDailyItems(pool,n,salt=0){return seededShuffle(pool,getDailySeed()+salt).slice(0,n);}
+function getDataItaliana(){
   const g=['Domenica','Lunedì','Martedì','Mercoledì','Giovedì','Venerdì','Sabato'];
   const m=['gennaio','febbraio','marzo','aprile','maggio','giugno','luglio','agosto','settembre','ottobre','novembre','dicembre'];
-  const d=new Date();
-  return `${g[d.getDay()]} ${d.getDate()} ${m[d.getMonth()]}`;
+  const d=new Date();return`${g[d.getDay()]} ${d.getDate()} ${m[d.getMonth()]}`;
 }
-
 function rand(arr){return arr[Math.floor(Math.random()*arr.length)];}
-
 const BRAVO=['Bravissima! 🌟','Perfetto! 🌸','Esatto! ✨','Che brava! 🎉','Meravigliosa! 💛'];
-const QUASI=['Quasi! Riprova domani 😊','Va benissimo così! 💕','Ci siamo quasi! 🌷'];
+const QUASI=['Quasi! 😊','Va benissimo così! 💕','Ci siamo quasi! 🌷'];
 
-// ═══════════════════════════════════════════════════════════
-// STATE
-// ═══════════════════════════════════════════════════════════
-
-const S = {
-  tab: 'quiz',
+// ══════════════════════════════════════════════════════════════
+// STATO
+// ══════════════════════════════════════════════════════════════
+const S={
+  schermata:'splash', // splash | giochi
+  tab:'quiz',
   // quiz
-  qDomande: [], qIdx: 0, qRisposta: false, qScelta: null, qPunteggio: 0, qFinito: false,
-  // memory
-  mCards: [], mFlipped: [], mMatched: [], mTentativi: 0, mLocked: false, mFinito: false,
+  qDomande:[],qIdx:0,qRisposta:false,qScelta:null,qPunteggio:0,qFinito:false,
+  // memoria
+  mCards:[],mFlipped:[],mMatched:[],mTentativi:0,mLocked:false,mFinito:false,
   // frasi
-  fFrasi: [], fIdx: 0, fRisposta: false, fScelta: null, fPunteggio: 0, fFinito: false,
+  fFrasi:[],fIdx:0,fRisposta:false,fScelta:null,fPunteggio:0,fFinito:false,
+  // numeri
+  nLivello:1,nSequenza:[],nFase:'guarda',nInput:'',nTentativi:0,nTimer:null,nFinito:false,nRisultato:null,
+  // buon umore (tab)
+  umoreIdx:0,
   // storico
-  storico: [],
+  storico:[],
 };
 
-function initQuiz(){
-  S.qDomande=getDailyItems(QUIZ_POOL,5,0);
-  S.qIdx=0;S.qRisposta=false;S.qScelta=null;S.qPunteggio=0;S.qFinito=false;
-}
+function initQuiz(){S.qDomande=getDailyItems(QUIZ_POOL,5,0);S.qIdx=0;S.qRisposta=false;S.qScelta=null;S.qPunteggio=0;S.qFinito=false;}
 function initMemoria(){
   const pairs=getDailyItems(MEMORIA_PAIRS,6,100);
   const flat=pairs.flatMap(p=>p);
-  S.mCards=seededShuffle(flat.map((em,i)=>({em,id:i,pair:Math.floor(i/2)})),getDailySeed()+200);
+  S.mCards=seededShuffle(flat.map((em,i)=>({em,id:i})),getDailySeed()+200);
   S.mFlipped=[];S.mMatched=[];S.mTentativi=0;S.mLocked=false;S.mFinito=false;
 }
-function initFrasi(){
-  S.fFrasi=getDailyItems(FRASI_POOL,4,300);
-  S.fIdx=0;S.fRisposta=false;S.fScelta=null;S.fPunteggio=0;S.fFinito=false;
+function initFrasi(){S.fFrasi=getDailyItems(FRASI_POOL,4,300);S.fIdx=0;S.fRisposta=false;S.fScelta=null;S.fPunteggio=0;S.fFinito=false;}
+function initNumeri(lv){
+  if(S.nTimer)clearInterval(S.nTimer);
+  const n=lv+2; // livello 1=3 cifre, lv 2=4 cifre, ecc.
+  S.nSequenza=Array.from({length:n},()=>Math.floor(Math.random()*9)+1);
+  S.nLivello=lv;S.nFase='guarda';S.nInput='';S.nFinito=false;S.nRisultato=null;
 }
 
-// ═══════════════════════════════════════════════════════════
-// RENDER ENGINE
-// ═══════════════════════════════════════════════════════════
-
-async function render(){
+// ══════════════════════════════════════════════════════════════
+// RENDER PRINCIPALE
+// ══════════════════════════════════════════════════════════════
+async function renderApp(){
   const app=document.getElementById('app');
   app.innerHTML='';
+  S.storico=await loadStorico();
+  if(S.schermata==='splash'){renderSplash(app);return;}
+  renderGiochi(app);
+}
 
-  // Storico per streak
-  S.storico = await loadStorico();
-  const streak = calcStreak(S.storico);
+// ══════════════════════════════════════════════════════════════
+// SPLASH — frase del buon umore
+// ══════════════════════════════════════════════════════════════
+let splashTimer=null;
+function renderSplash(app){
+  const frase=getDailyItems(FRASI_BUONUMORE,1,999)[0];
+  const DURATA=8; // secondi
+
+  const splash=document.createElement('div');splash.className='splash';
+  splash.innerHTML=`
+    <span class="splash-flower">🌸</span>
+    <div class="splash-buongiorno">Buongiorno!</div>
+    <div class="splash-data">📅 ${getDataItaliana()}</div>
+    <div class="splash-quote-card">
+      <span class="splash-quote-icon">${frase.icon}</span>
+      <div class="splash-virgola">"</div>
+      <div class="splash-frase">${frase.frase}</div>
+      <div class="splash-divider"></div>
+      <div class="splash-autore">— ${frase.autore}</div>
+    </div>
+    <div class="splash-bar-wrap"><div class="splash-bar" id="splash-bar"></div></div>
+    <div class="splash-hint">Tocca per iniziare subito ✨</div>
+    <button class="splash-btn" id="splash-btn">🧩 Iniziamo a giocare!</button>`;
+
+  app.appendChild(splash);
+
+  // Barra progresso automatica
+  const bar=document.getElementById('splash-bar');
+  let elapsed=0;
+  const STEP=100;
+  splashTimer=setInterval(()=>{
+    elapsed+=STEP;
+    const perc=Math.min((elapsed/(DURATA*1000))*100,100);
+    bar.style.width=perc+'%';
+    if(elapsed>=DURATA*1000){clearInterval(splashTimer);goToGiochi();}
+  },STEP);
+
+  const goToGiochi=()=>{
+    if(splashTimer)clearInterval(splashTimer);
+    S.schermata='giochi';
+    renderApp();
+  };
+  document.getElementById('splash-btn').onclick=goToGiochi;
+  splash.onclick=(e)=>{if(e.target.id!=='splash-btn')goToGiochi();};
+}
+
+// ══════════════════════════════════════════════════════════════
+// GIOCHI — header + nav + contenuto
+// ══════════════════════════════════════════════════════════════
+function renderGiochi(app){
+  const streak=calcStreak(S.storico);
 
   // Header
-  const h=document.createElement('div');
-  h.className='header';
+  const h=document.createElement('div');h.className='header';
   h.innerHTML=`
-    <div class="header-top">
-      <span class="petal">🌸</span>
-      <h1>Il Gioco della Memoria</h1>
-      <span class="petal">🌸</span>
-    </div>
+    <div class="header-top"><span class="petal">🌸</span><h1>Il Gioco della Memoria</h1><span class="petal">🌸</span></div>
     <div>
       <span class="date-tag">📅 ${getDataItaliana()}</span>
       ${streak>0?`<span class="streak-tag">🔥 ${streak} giorni</span>`:''}
     </div>`;
   app.appendChild(h);
 
-  // Nav
-  const nav=document.createElement('div');
-  nav.className='nav';
-  [['quiz','🧩','Quiz'],['memoria','🃏','Memoria'],['frasi','📜','Frasi'],['storico','📊','Storico']].forEach(([id,icon,label])=>{
-    const btn=document.createElement('button');
-    btn.className='nav-btn'+(S.tab===id?' active':'');
+  // Nav (7 tab → griglia 7 colonne)
+  const tabs=[['quiz','🧩','Quiz'],['memoria','🃏','Coppie'],['frasi','📜','Frasi'],['numeri','🔢','Numeri'],['umore','😊','Umore'],['storico','📊','Score'],['musica','🎵','Musica']];
+  const nav=document.createElement('div');nav.className='nav';
+  nav.style.gridTemplateColumns=`repeat(${tabs.length},1fr)`;
+  tabs.forEach(([id,icon,label])=>{
+    const btn=document.createElement('button');btn.className='nav-btn'+(S.tab===id?' active':'');
     btn.innerHTML=`<span class="nav-icon">${icon}</span>${label}`;
-    btn.onclick=()=>{S.tab=id;render();};
+    btn.onclick=()=>{S.tab=id;renderApp();};
     nav.appendChild(btn);
   });
   app.appendChild(nav);
 
-  if(S.tab==='quiz') renderQuiz(app);
-  else if(S.tab==='memoria') renderMemoria(app);
-  else if(S.tab==='frasi') renderFrasi(app);
-  else if(S.tab==='storico') renderStorico(app);
+  // Contenuto
+  if(S.tab==='quiz')renderQuiz(app);
+  else if(S.tab==='memoria')renderMemoria(app);
+  else if(S.tab==='frasi')renderFrasi(app);
+  else if(S.tab==='numeri')renderNumeri(app);
+  else if(S.tab==='umore')renderUmore(app);
+  else if(S.tab==='storico')renderStorico(app);
+  else if(S.tab==='musica')renderMusica(app);
 }
 
-// ── QUIZ ──────────────────────────────────────────────────
-
+// ══════════════════════════════════════════════════════════════
+// QUIZ
+// ══════════════════════════════════════════════════════════════
 function renderQuiz(app){
-  if(S.qFinito){renderRisultato(app,'quiz',S.qPunteggio,S.qDomande.length);return;}
+  if(S.qFinito){renderRisultato(app,'quiz','Quiz',S.qPunteggio,S.qDomande.length);return;}
   const q=S.qDomande[S.qIdx];
   const card=document.createElement('div');card.className='card';
-
-  // Progress
   const prog=document.createElement('div');prog.className='quiz-progress';
   const bar=document.createElement('div');bar.className='quiz-progress-bar';
   bar.style.width=`${((S.qIdx+1)/S.qDomande.length)*100}%`;
   prog.appendChild(bar);card.appendChild(prog);
-
-  card.innerHTML+=`
-    <div style="text-align:center;font-size:13px;font-weight:600;color:var(--text-l);margin-bottom:14px">
-      Domanda ${S.qIdx+1} di ${S.qDomande.length}
-    </div>
-    <span class="quiz-icon">${q.icon}</span>
-    <div class="quiz-q">${q.q}</div>`;
-
+  card.innerHTML+=`<div style="text-align:center;font-size:12px;font-weight:600;color:var(--text-l);margin-bottom:12px">Domanda ${S.qIdx+1} di ${S.qDomande.length}</div><span class="quiz-icon">${q.icon}</span><div class="quiz-q">${q.q}</div>`;
   const opts=document.createElement('div');opts.className='opts';
   q.r.forEach((r,i)=>{
-    const btn=document.createElement('button');btn.className='opt';
-    btn.textContent=r;
+    const btn=document.createElement('button');btn.className='opt';btn.textContent=r;
     if(S.qRisposta){
-      if(i===q.c) btn.classList.add('correct');
-      else if(i===S.qScelta) btn.classList.add('wrong');
+      if(i===q.c)btn.classList.add('correct');
+      else if(i===S.qScelta)btn.classList.add('wrong');
       else btn.classList.add('reveal');
       btn.classList.add('disabled');
     }
-    btn.onclick=()=>{
-      if(S.qRisposta)return;
-      S.qRisposta=true;S.qScelta=i;
-      if(i===q.c)S.qPunteggio++;
-      render();
-    };
+    btn.onclick=()=>{if(S.qRisposta)return;S.qRisposta=true;S.qScelta=i;if(i===q.c)S.qPunteggio++;renderApp();};
     opts.appendChild(btn);
   });
   card.appendChild(opts);
-
   if(S.qRisposta){
     const ok=S.qScelta===q.c;
-    const fb=document.createElement('div');
-    fb.className='feedback-bar '+(ok?'ok':'ko');
-    fb.textContent=ok?rand(BRAVO):rand(QUASI);
-    card.appendChild(fb);
-    const nb=document.createElement('button');
-    nb.className='btn-next'+(ok?' sage':'');
+    const fb=document.createElement('div');fb.className='feedback-bar '+(ok?'ok':'ko');fb.textContent=ok?rand(BRAVO):rand(QUASI);card.appendChild(fb);
+    const nb=document.createElement('button');nb.className='btn-next'+(ok?' sage':'');
     const isLast=S.qIdx===S.qDomande.length-1;
     nb.textContent=isLast?'🏁 Vedi il risultato':'➡️ Prossima domanda';
-    nb.onclick=()=>{
-      if(isLast){S.qFinito=true;saveRisultato('Quiz',S.qPunteggio,S.qDomande.length);}
-      else{S.qIdx++;S.qRisposta=false;S.qScelta=null;}
-      render();
-    };
+    nb.onclick=()=>{if(isLast){S.qFinito=true;saveRisultato('Quiz',S.qPunteggio,S.qDomande.length);}else{S.qIdx++;S.qRisposta=false;S.qScelta=null;}renderApp();};
     card.appendChild(nb);
   }
   app.appendChild(card);
 }
 
-// ── MEMORIA ───────────────────────────────────────────────
-
+// ══════════════════════════════════════════════════════════════
+// MEMORIA / COPPIE
+// ══════════════════════════════════════════════════════════════
 function renderMemoria(app){
-  if(S.mFinito){renderRisultato(app,'memoria',S.mCards.length/2,S.mCards.length/2,`in ${S.mTentativi} tentativi`);return;}
-
+  if(S.mFinito){renderRisultato(app,'memoria','Coppie',S.mCards.length/2,S.mCards.length/2,`in ${S.mTentativi} tentativi`);return;}
   const card=document.createElement('div');card.className='card';
-  card.innerHTML=`
-    <div class="card-title">🃏 Abbina le coppie</div>
-    <div class="card-sub">Trova tutte le coppie uguali!</div>`;
-
+  card.innerHTML=`<div class="card-title">🃏 Abbina le coppie</div><div class="card-sub">Trova tutte le coppie uguali!</div>`;
   const info=document.createElement('div');info.className='mem-info';
   const paired=S.mMatched.length/2;
-  info.innerHTML=`
-    <div class="mem-stat"><div class="val">${paired}</div><div class="lbl">Coppie trovate</div></div>
-    <div class="mem-stat"><div class="val">${S.mCards.length/2-paired}</div><div class="lbl">Rimaste</div></div>
-    <div class="mem-stat"><div class="val">${S.mTentativi}</div><div class="lbl">Tentativi</div></div>`;
+  info.innerHTML=`<div class="mem-stat"><div class="val">${paired}</div><div class="lbl">Trovate</div></div><div class="mem-stat"><div class="val">${S.mCards.length/2-paired}</div><div class="lbl">Rimaste</div></div><div class="mem-stat"><div class="val">${S.mTentativi}</div><div class="lbl">Tentativi</div></div>`;
   card.appendChild(info);
-
   const grid=document.createElement('div');grid.className='mem-grid';
   S.mCards.forEach((c,i)=>{
-    const mc=document.createElement('div');
-    mc.className='mem-card';
-    mc.id='mc'+i;
-    const isFlipped=S.mFlipped.includes(i);
-    const isMatched=S.mMatched.includes(i);
-    if(isFlipped||isMatched)mc.classList.add('flipped');
-    if(isMatched)mc.classList.add('matched');
+    const mc=document.createElement('div');mc.className='mem-card';mc.id='mc'+i;
+    const isFl=S.mFlipped.includes(i),isMa=S.mMatched.includes(i);
+    if(isFl||isMa)mc.classList.add('flipped');
+    if(isMa)mc.classList.add('matched');
     mc.innerHTML=`<span class="mem-back">🌸</span><span class="mem-front">${c.em}</span>`;
-    if(!isMatched){
-      mc.onclick=()=>flipCard(i);
-    }
+    if(!isMa)mc.onclick=()=>flipCard(i);
     grid.appendChild(mc);
   });
-  card.appendChild(grid);
-  app.appendChild(card);
+  card.appendChild(grid);app.appendChild(card);
 }
-
 function flipCard(i){
-  if(S.mLocked)return;
-  if(S.mFlipped.includes(i)||S.mMatched.includes(i))return;
-  if(S.mFlipped.length>=2)return;
+  if(S.mLocked||S.mFlipped.includes(i)||S.mMatched.includes(i)||S.mFlipped.length>=2)return;
   S.mFlipped.push(i);
-  const el=document.getElementById('mc'+i);
-  if(el){el.classList.add('flipped');}
+  const el=document.getElementById('mc'+i);if(el)el.classList.add('flipped');
   if(S.mFlipped.length===2){
-    S.mTentativi++;
-    S.mLocked=true;
-    const [a,b]=S.mFlipped;
+    S.mTentativi++;S.mLocked=true;
+    const[a,b]=S.mFlipped;
     setTimeout(()=>{
       if(S.mCards[a].em===S.mCards[b].em){
-        S.mMatched.push(a,b);
-        S.mFlipped=[];S.mLocked=false;
-        if(S.mMatched.length===S.mCards.length){
-          S.mFinito=true;
-          saveRisultato('Memoria',S.mCards.length/2,S.mCards.length/2);
-        }
-        render();
-      } else {
-        const ea=document.getElementById('mc'+a);
-        const eb=document.getElementById('mc'+b);
-        if(ea)ea.classList.add('shake');
-        if(eb)eb.classList.add('shake');
-        setTimeout(()=>{
-          S.mFlipped=[];S.mLocked=false;
-          [ea,eb].forEach(el=>{if(el){el.classList.remove('flipped','shake');}});
-        },600);
+        S.mMatched.push(a,b);S.mFlipped=[];S.mLocked=false;
+        if(S.mMatched.length===S.mCards.length){S.mFinito=true;saveRisultato('Coppie',S.mCards.length/2,S.mCards.length/2);}
+        renderApp();
+      }else{
+        const ea=document.getElementById('mc'+a),eb=document.getElementById('mc'+b);
+        if(ea)ea.classList.add('shake');if(eb)eb.classList.add('shake');
+        setTimeout(()=>{S.mFlipped=[];S.mLocked=false;[ea,eb].forEach(el=>{if(el){el.classList.remove('flipped','shake');}});},600);
       }
     },700);
   }
 }
 
-// ── FRASI ─────────────────────────────────────────────────
-
+// ══════════════════════════════════════════════════════════════
+// FRASI
+// ══════════════════════════════════════════════════════════════
 function renderFrasi(app){
-  if(S.fFinito){renderRisultato(app,'frasi',S.fPunteggio,S.fFrasi.length);return;}
+  if(S.fFinito){renderRisultato(app,'frasi','Frasi',S.fPunteggio,S.fFrasi.length);return;}
   const f=S.fFrasi[S.fIdx];
   const card=document.createElement('div');card.className='card';
-
   const prog=document.createElement('div');prog.className='quiz-progress';
-  const bar=document.createElement('div');bar.className='quiz-progress-bar';
-  bar.style.width=`${((S.fIdx+1)/S.fFrasi.length)*100}%`;
+  const bar=document.createElement('div');bar.className='quiz-progress-bar';bar.style.width=`${((S.fIdx+1)/S.fFrasi.length)*100}%`;
   prog.appendChild(bar);card.appendChild(prog);
-
-  const cnt=document.createElement('div');cnt.className='frase-counter';
-  cnt.textContent=`Frase ${S.fIdx+1} di ${S.fFrasi.length}`;
-  card.appendChild(cnt);
-
-  // Testo con blank
+  card.innerHTML+=`<div style="text-align:center;font-size:12px;font-weight:600;color:var(--text-l);margin-bottom:14px">Frase ${S.fIdx+1} di ${S.fFrasi.length}</div>`;
   const parola=S.fRisposta?f.parola:'_____';
-  const testoHtml=f.testo.replace('_____',`<span class="blank">${parola}</span>`);
-  const frase=document.createElement('div');frase.className='frase-container';
-  frase.innerHTML=`
-    <div class="frase-text">"${testoHtml}"</div>
-    <div class="frase-autore">— ${f.autore}</div>`;
-  card.appendChild(frase);
-
+  const html=f.testo.replace('_____',`<span class="blank">${parola}</span>`);
+  card.innerHTML+=`<div class="frase-text">"${html}"</div><div class="frase-autore">— ${f.autore}</div>`;
   const opts=document.createElement('div');opts.className='frase-opts';
   f.opz.forEach((o,i)=>{
-    const btn=document.createElement('button');btn.className='frase-opt';
-    btn.textContent=o;
+    const btn=document.createElement('button');btn.className='frase-opt';btn.textContent=o;
     if(S.fRisposta){
       if(i===f.c)btn.classList.add('correct');
       else if(i===S.fScelta)btn.classList.add('wrong');
       else btn.classList.add('reveal');
       btn.classList.add('disabled');
     }
-    btn.onclick=()=>{
-      if(S.fRisposta)return;
-      S.fRisposta=true;S.fScelta=i;
-      if(i===f.c)S.fPunteggio++;
-      render();
-    };
+    btn.onclick=()=>{if(S.fRisposta)return;S.fRisposta=true;S.fScelta=i;if(i===f.c)S.fPunteggio++;renderApp();};
     opts.appendChild(btn);
   });
   card.appendChild(opts);
-
   if(S.fRisposta){
     const ok=S.fScelta===f.c;
-    const fb=document.createElement('div');fb.className='feedback-bar '+(ok?'ok':'ko');
-    fb.textContent=ok?rand(BRAVO):rand(QUASI);
-    card.appendChild(fb);
+    const fb=document.createElement('div');fb.className='feedback-bar '+(ok?'ok':'ko');fb.textContent=ok?rand(BRAVO):rand(QUASI);card.appendChild(fb);
     const nb=document.createElement('button');nb.className='btn-next'+(ok?' sage':'');
     const isLast=S.fIdx===S.fFrasi.length-1;
     nb.textContent=isLast?'🏁 Vedi il risultato':'➡️ Prossima frase';
-    nb.onclick=()=>{
-      if(isLast){S.fFinito=true;saveRisultato('Frasi',S.fPunteggio,S.fFrasi.length);}
-      else{S.fIdx++;S.fRisposta=false;S.fScelta=null;}
-      render();
-    };
+    nb.onclick=()=>{if(isLast){S.fFinito=true;saveRisultato('Frasi',S.fPunteggio,S.fFrasi.length);}else{S.fIdx++;S.fRisposta=false;S.fScelta=null;}renderApp();};
     card.appendChild(nb);
   }
   app.appendChild(card);
 }
 
-// ── RISULTATO ─────────────────────────────────────────────
+// ══════════════════════════════════════════════════════════════
+// NUMERI
+// ══════════════════════════════════════════════════════════════
+function renderNumeri(app){
+  const card=document.createElement('div');card.className='card';
+  // Header
+  const hdr=document.createElement('div');hdr.className='num-header';
+  hdr.innerHTML=`<span class="num-lv">Livello ${S.nLivello} — ${S.nSequenza.length} cifre</span><span class="num-tentativi">Tentativo ${S.nTentativi+1}</span>`;
+  card.appendChild(hdr);
 
-function renderRisultato(app, tipo, p, tot, extra=''){
+  if(S.nFase==='guarda'){
+    // Mostra la sequenza per 3 secondi poi nasconde
+    const disp=document.createElement('div');disp.className='num-display';
+    disp.innerHTML=`<div class="num-phase-label">Memorizza la sequenza</div><div class="num-seq" id="num-seq">${S.nSequenza.join(' ')}</div><div class="num-sub" id="num-sub">Scompare tra 3 secondi...</div>`;
+    card.appendChild(disp);
+    const istr=document.createElement('div');istr.className='num-istruzioni';
+    istr.textContent='Guarda bene i numeri, poi dovrai ripeterli!';
+    card.appendChild(istr);
+    app.appendChild(card);
+
+    // Timer conto alla rovescia
+    let count=3;
+    if(S.nTimer)clearInterval(S.nTimer);
+    S.nTimer=setInterval(()=>{
+      count--;
+      const sub=document.getElementById('num-sub');
+      if(sub)sub.textContent=count>0?`Scompare tra ${count} second${count===1?'o':'i'}...`:'Adesso scrivi!';
+      if(count<=0){
+        clearInterval(S.nTimer);S.nTimer=null;
+        const seq=document.getElementById('num-seq');
+        if(seq)seq.classList.add('hidden');
+        setTimeout(()=>{S.nFase='scrivi';renderApp();},600);
+      }
+    },1000);
+
+  } else if(S.nFase==='scrivi'){
+    const disp=document.createElement('div');disp.className='num-display';
+    disp.innerHTML=`<div class="num-phase-label">Scrivi la sequenza</div><div class="num-seq hidden">???</div><div class="num-sub">Usa il tastierino qui sotto</div>`;
+    card.appendChild(disp);
+
+    // Risposta inserita
+    const risp=document.createElement('div');
+    if(S.nInput.length>0){risp.className='num-risposta';risp.textContent=S.nInput.split('').join(' ');}
+    else{risp.className='num-risposta placeholder';risp.textContent='Tocca i numeri...';}
+    card.appendChild(risp);
+
+    // Tastierino
+    const kp=document.createElement('div');kp.className='num-keypad';
+    [1,2,3,4,5,6,7,8,9,'✗',0,'✓'].forEach(k=>{
+      const btn=document.createElement('button');
+      if(k==='✗'){btn.className='num-key del';btn.textContent='✗';btn.onclick=()=>{S.nInput=S.nInput.slice(0,-1);renderApp();};}
+      else if(k==='✓'){
+        btn.className='num-key ok';btn.textContent='Conferma';
+        btn.onclick=()=>{
+          const corretto=S.nSequenza.join('')===S.nInput;
+          S.nFase='risultato';S.nRisultato=corretto;
+          if(corretto)saveRisultato('Numeri',1,1);
+          renderApp();
+        };
+      } else{
+        btn.className='num-key';btn.textContent=k;
+        btn.onclick=()=>{if(S.nInput.length<S.nSequenza.length){S.nInput+=k;renderApp();}};
+      }
+      kp.appendChild(btn);
+    });
+    card.appendChild(kp);
+    app.appendChild(card);
+
+  } else if(S.nFase==='risultato'){
+    const ok=S.nRisultato;
+    const fb=document.createElement('div');fb.className='feedback-bar '+(ok?'ok':'ko');
+    fb.style.fontSize='22px';fb.style.marginBottom='16px';
+    fb.textContent=ok?'Bravissima! Sequenza corretta! 🏆':'Non ci siamo... 💪 Riprova!';
+    card.appendChild(fb);
+
+    // Mostra la sequenza corretta
+    const disp=document.createElement('div');disp.className='num-display';
+    disp.innerHTML=`<div class="num-phase-label">${ok?'La tua risposta':'Sequenza corretta'}</div><div class="num-seq">${S.nSequenza.join(' ')}</div>`;
+    card.appendChild(disp);
+
+    const btnRow=document.createElement('div');btnRow.style.display='flex';btnRow.style.flexDirection='column';btnRow.style.gap='10px';
+    if(ok && S.nLivello<8){
+      const btnSu=document.createElement('button');btnSu.className='btn-next sage';btnSu.textContent=`⬆️ Livello ${S.nLivello+1} — ${S.nSequenza.length+1} cifre`;
+      btnSu.onclick=()=>{S.nTentativi=0;initNumeri(S.nLivello+1);renderApp();};btnRow.appendChild(btnSu);
+    }
+    const btnRi=document.createElement('button');btnRi.className=ok?'btn-outline':'btn-next';
+    btnRi.textContent=ok?'🔄 Riprova stesso livello':`🔄 Riprova (${S.nSequenza.length} cifre)`;
+    btnRi.onclick=()=>{S.nTentativi++;initNumeri(S.nLivello);renderApp();};btnRow.appendChild(btnRi);
+    if(S.nLivello>1){
+      const btnGiu=document.createElement('button');btnGiu.className='btn-outline';btnGiu.textContent=`⬇️ Torna al livello ${S.nLivello-1}`;
+      btnGiu.onclick=()=>{S.nTentativi=0;initNumeri(S.nLivello-1);renderApp();};btnRow.appendChild(btnGiu);
+    }
+    card.appendChild(btnRow);
+    app.appendChild(card);
+  }
+  if(S.nFase!=='scrivi'&&S.nFase!=='risultato'){}// già appended sopra
+}
+
+// ══════════════════════════════════════════════════════════════
+// BUON UMORE (tab)
+// ══════════════════════════════════════════════════════════════
+function renderUmore(app){
+  // Frase del giorno (diversa da quella in splash — seed diverso)
+  const frase=getDailyItems(FRASI_BUONUMORE,1,777)[0];
+  const card=document.createElement('div');card.className='umore-big card';
+  card.innerHTML=`
+    <span class="umore-icon">${frase.icon}</span>
+    <div class="umore-frase">"${frase.frase}"</div>
+    <div class="umore-div"></div>
+    <div class="umore-autore">— ${frase.autore}</div>`;
+
+  // Bottone per frase casuale extra
+  const btn=document.createElement('button');btn.className='btn-altra';btn.textContent='🌸 Un\'altra frase';
+  let extra=null;
+  btn.onclick=()=>{
+    const pool=FRASI_BUONUMORE.filter(f=>f.frase!==frase.frase);
+    extra=pool[Math.floor(Math.random()*pool.length)];
+    const extraCard=document.getElementById('umore-extra');
+    if(extraCard){
+      extraCard.innerHTML=`<span style="font-size:32px;display:block;margin-bottom:10px">${extra.icon}</span><div class="umore-frase" style="font-size:21px">"${extra.frase}"</div><div class="umore-div"></div><div class="umore-autore">— ${extra.autore}</div>`;
+    }
+  };
+  card.appendChild(btn);
+  app.appendChild(card);
+
+  // Spazio per frase extra
+  const extraCard=document.createElement('div');extraCard.className='card';extraCard.id='umore-extra';
+  extraCard.innerHTML='<div class="no-data" style="padding:16px">Tocca il bottone per un\'altra frase 🌷</div>';
+  app.appendChild(extraCard);
+}
+
+// ══════════════════════════════════════════════════════════════
+// STORICO
+// ══════════════════════════════════════════════════════════════
+function calcStreak(storico){
+  if(!storico.length)return 0;
+  const byDay=new Set(storico.map(s=>s.data));
+  const today=getTodayKey();
+  if(!byDay.has(today))return 0;
+  let streak=1;const d=new Date();
+  for(let i=1;i<90;i++){d.setDate(d.getDate()-1);const k=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;if(byDay.has(k))streak++;else break;}
+  return streak;
+}
+function renderStorico(app){
+  const storico=S.storico,streak=calcStreak(storico);
+  const card=document.createElement('div');card.className='card';
+  card.innerHTML=`<div class="card-title">📊 I tuoi progressi</div><div class="card-sub">Continua così ogni giorno!</div>`;
+  const sb=document.createElement('div');sb.className='streak-big';
+  sb.innerHTML=`<span class="streak-fire">🔥</span><div class="streak-info"><div class="val">${streak} ${streak===1?'giorno':'giorni'}</div><div class="lbl">Striscia attuale</div></div>`;
+  card.appendChild(sb);
+  // Chart
+  const chartTitle=document.createElement('div');chartTitle.style.cssText='font-size:13px;font-weight:700;color:var(--text-l);margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px;';chartTitle.textContent='Punteggi ultimi 7 giorni';card.appendChild(chartTitle);
+  const chart=document.createElement('div');chart.className='chart';
+  const today=getTodayKey();const d=new Date();
+  for(let i=6;i>=0;i--){
+    const dd=new Date(d);dd.setDate(d.getDate()-i);
+    const key=`${dd.getFullYear()}-${String(dd.getMonth()+1).padStart(2,'0')}-${String(dd.getDate()).padStart(2,'0')}`;
+    const gl=['Do','Lu','Ma','Me','Gi','Ve','Sa'][dd.getDay()];
+    const gr=storico.filter(s=>s.data===key);
+    const avg=gr.length?Math.round(gr.reduce((a,s)=>a+(s.punteggio/s.totale)*100,0)/gr.length):0;
+    const wrap=document.createElement('div');wrap.className='bar-wrap';
+    const col=document.createElement('div');col.className='bar-col '+(avg>0?(key===today?'today':'has-data'):'empty');col.style.height=`${Math.max(avg,4)}%`;
+    const dayL=document.createElement('div');dayL.className='bar-day';dayL.textContent=gl;
+    const valL=document.createElement('div');valL.className='bar-val';valL.textContent=avg>0?avg+'%':'';
+    wrap.appendChild(valL);wrap.appendChild(col);wrap.appendChild(dayL);chart.appendChild(wrap);
+  }
+  card.appendChild(chart);app.appendChild(card);
+  // Lista
+  if(storico.length>0){
+    const lc=document.createElement('div');lc.className='card';lc.innerHTML='<div class="card-title" style="margin-bottom:12px">Ultime partite</div>';
+    const icons={Quiz:'🧩',Coppie:'🃏',Frasi:'📜',Numeri:'🔢'};
+    [...storico].reverse().slice(0,8).forEach(s=>{
+      const perc=Math.round((s.punteggio/s.totale)*100);
+      const row=document.createElement('div');row.className='game-row';
+      row.innerHTML=`<div class="game-row-left"><span class="game-row-icon">${icons[s.tipo]||'🎮'}</span><div><div class="game-row-name">${s.tipo}</div><div class="game-row-date">${s.data}</div></div></div><span class="game-row-score">${perc}%</span>`;
+      lc.appendChild(row);
+    });
+    app.appendChild(lc);
+  }else{
+    const em=document.createElement('div');em.className='card';em.innerHTML='<div class="no-data">🌸 Nessuna partita ancora.<br>Inizia a giocare per vedere i progressi!</div>';app.appendChild(em);
+  }
+}
+
+// ══════════════════════════════════════════════════════════════
+// MUSICA
+// ══════════════════════════════════════════════════════════════
+function renderMusica(app){
+  const hc=document.createElement('div');hc.className='card';
+  hc.innerHTML=`<div class="card-title">🎵 Musica del cuore</div><div class="card-sub">Tocca ▶ per ascoltare su YouTube</div>`;
+  app.appendChild(hc);
+  getDailyItems(CANZONI,5,400).forEach((s,i)=>{
+    const row=document.createElement('div');row.className='song-row';row.style.animationDelay=`${i*0.07}s`;
+    row.innerHTML=`<div class="song-em">${s.e}</div><div class="song-inf"><div class="song-t">${s.t}</div><div class="song-a">${s.a}</div></div><span class="song-y">${s.y}</span><a href="${s.url}" target="_blank" class="play-a">▶</a>`;
+    app.appendChild(row);
+  });
+  const nota=document.createElement('div');nota.style.cssText='text-align:center;padding:16px;font-size:14px;color:var(--text-l);line-height:1.7;';nota.innerHTML='💛 La musica fa bene al cuore e alla memoria.<br>Buon ascolto!';app.appendChild(nota);
+}
+
+// ══════════════════════════════════════════════════════════════
+// RISULTATO GENERICO
+// ══════════════════════════════════════════════════════════════
+function renderRisultato(app,tipo,nomeGioco,p,tot,extra=''){
   const perc=Math.round((p/tot)*100);
   let em,titolo,testo;
   if(perc===100){em='🏆';titolo='Perfetto!';testo='Tutte le risposte giuste. Sei straordinaria!';}
   else if(perc>=60){em='⭐';titolo='Molto bene!';testo='Ottimo risultato oggi. Sei fantastica!';}
   else{em='💛';titolo='Bravo tentativo!';testo='Ogni giorno si migliora. Sei bravissima lo stesso!';}
-
-  const card=document.createElement('div');card.className='card';
-  card.style.textAlign='center';card.style.padding='32px 20px';
-  card.innerHTML=`
-    <span class="result-emoji">${em}</span>
-    <div class="result-title">${titolo}</div>
-    <div class="result-sub">${testo}${extra?'<br><small style="color:var(--text-l)">'+extra+'</small>':''}</div>
-    <span class="result-score">${p} / ${tot}</span>
-    <div class="result-label">risposte corrette</div>`;
-
-  const btns=document.createElement('div');btns.className='btn-row';
-
-  const btnMusica=document.createElement('button');btnMusica.className='btn-next';
-  btnMusica.textContent='🎵 Vai alla musica';
-  btnMusica.onclick=()=>{S.tab='musica';render();};
-
-  const btnRigioca=document.createElement('button');btnRigioca.className='btn-outline';
-  btnRigioca.textContent='🔄 Rigioca';
-  btnRigioca.onclick=()=>{
+  const card=document.createElement('div');card.className='card';card.style.textAlign='center';card.style.padding='28px 18px';
+  card.innerHTML=`<span class="result-emoji">${em}</span><div class="result-title">${titolo}</div><div class="result-sub">${testo}${extra?`<br><small style="color:var(--text-l)">${extra}</small>`:''}</div><span class="result-score">${p} / ${tot}</span><div class="result-label">risposte corrette</div>`;
+  const btns=document.createElement('div');btns.style.cssText='display:flex;flex-direction:column;gap:8px;';
+  const b1=document.createElement('button');b1.className='btn-next sky';b1.textContent='🎵 Vai alla musica';b1.onclick=()=>{S.tab='musica';renderApp();};
+  const b2=document.createElement('button');b2.className='btn-outline';b2.textContent='🔄 Rigioca';
+  b2.onclick=()=>{
     if(tipo==='quiz')initQuiz();
     else if(tipo==='memoria')initMemoria();
     else if(tipo==='frasi')initFrasi();
-    render();
+    else if(tipo==='numeri')initNumeri(S.nLivello);
+    renderApp();
   };
-
-  const btnStorico=document.createElement('button');btnStorico.className='btn-outline';
-  btnStorico.textContent='📊 Vedi i tuoi progressi';
-  btnStorico.onclick=()=>{S.tab='storico';render();};
-
-  btns.appendChild(btnMusica);btns.appendChild(btnRigioca);btns.appendChild(btnStorico);
-  card.appendChild(btns);
-  app.appendChild(card);
+  const b3=document.createElement('button');b3.className='btn-outline';b3.textContent='📊 Vedi i progressi';b3.onclick=()=>{S.tab='storico';renderApp();};
+  btns.appendChild(b1);btns.appendChild(b2);btns.appendChild(b3);card.appendChild(btns);app.appendChild(card);
 }
 
-// ── STORICO ───────────────────────────────────────────────
-
-function calcStreak(storico){
-  if(!storico.length)return 0;
-  const byDay=new Set(storico.map(s=>s.data));
-  const days=[...byDay].sort().reverse();
-  const today=getTodayKey();
-  if(!byDay.has(today))return 0;
-  let streak=1;
-  let d=new Date();
-  for(let i=1;i<60;i++){
-    d.setDate(d.getDate()-1);
-    const key=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
-    if(byDay.has(key))streak++;
-    else break;
-  }
-  return streak;
-}
-
-function renderStorico(app){
-  const storico=S.storico;
-  const streak=calcStreak(storico);
-
-  const header=document.createElement('div');header.className='card';
-  // Streak
-  header.innerHTML=`<div class="card-title">📊 I tuoi progressi</div><div class="card-sub">Continua così ogni giorno!</div>`;
-
-  const streakEl=document.createElement('div');streakEl.className='streak-big';
-  streakEl.innerHTML=`
-    <span class="streak-fire">🔥</span>
-    <div class="streak-info">
-      <div class="val">${streak} ${streak===1?'giorno':'giorni'}</div>
-      <div class="lbl">Striscia attuale</div>
-    </div>`;
-  header.appendChild(streakEl);
-
-  // Chart ultimi 7 giorni
-  const chartWrap=document.createElement('div');chartWrap.className='chart-wrap';
-  chartWrap.innerHTML='<div class="chart-title">Punteggi ultimi 7 giorni</div>';
-  const chart=document.createElement('div');chart.className='chart';
-
-  const today=getTodayKey();
-  const d=new Date();
-  for(let i=6;i>=0;i--){
-    const dd=new Date(d);dd.setDate(d.getDate()-i);
-    const key=`${dd.getFullYear()}-${String(dd.getMonth()+1).padStart(2,'0')}-${String(dd.getDate()).padStart(2,'0')}`;
-    const giornoLabel=['Do','Lu','Ma','Me','Gi','Ve','Sa'][dd.getDay()];
-    const giorniRisultati=storico.filter(s=>s.data===key);
-    const avgPerc=giorniRisultati.length
-      ? Math.round(giorniRisultati.reduce((a,s)=>a+(s.punteggio/s.totale)*100,0)/giorniRisultati.length)
-      : 0;
-    const wrap=document.createElement('div');wrap.className='bar-wrap';
-    const col=document.createElement('div');
-    col.className='bar-col '+(avgPerc>0?(key===today?'today':'has-data'):'empty');
-    col.style.height=`${Math.max(avgPerc,4)}%`;
-    const dayL=document.createElement('div');dayL.className='bar-day';dayL.textContent=giornoLabel;
-    const valL=document.createElement('div');valL.className='bar-val';valL.textContent=avgPerc>0?avgPerc+'%':'';
-    wrap.appendChild(valL);wrap.appendChild(col);wrap.appendChild(dayL);
-    chart.appendChild(wrap);
-  }
-  chartWrap.appendChild(chart);
-  header.appendChild(chartWrap);
-  app.appendChild(header);
-
-  // Lista ultimi giochi
-  if(storico.length>0){
-    const listCard=document.createElement('div');listCard.className='card';
-    listCard.innerHTML='<div class="card-title" style="margin-bottom:14px">Ultime partite</div>';
-    const list=document.createElement('div');list.className='games-list';
-    const icons={'Quiz':'🧩','Memoria':'🃏','Frasi':'📜'};
-    const recent=[...storico].reverse().slice(0,8);
-    recent.forEach(s=>{
-      const perc=Math.round((s.punteggio/s.totale)*100);
-      const row=document.createElement('div');row.className='game-row';
-      row.innerHTML=`
-        <div class="game-row-left">
-          <span class="game-row-icon">${icons[s.tipo]||'🎮'}</span>
-          <div>
-            <div class="game-row-name">${s.tipo}</div>
-            <div class="game-row-date">${s.data}</div>
-          </div>
-        </div>
-        <span class="game-row-score">${perc}%</span>`;
-      list.appendChild(row);
-    });
-    listCard.appendChild(list);
-    app.appendChild(listCard);
-  } else {
-    const empty=document.createElement('div');empty.className='card';
-    empty.innerHTML='<div class="no-data">🌸 Nessuna partita ancora.<br>Inizia a giocare per vedere i tuoi progressi!</div>';
-    app.appendChild(empty);
-  }
-}
-
-// ── MUSICA ────────────────────────────────────────────────
-
-// Aggiungi tab musica al nav — la gestiamo qui
-function renderMusica(app){
-  const header=document.createElement('div');header.className='card';
-  header.innerHTML=`
-    <div class="card-title">🎵 Musica del cuore</div>
-    <div class="card-sub">Tocca ▶ per ascoltare su YouTube</div>`;
-  app.appendChild(header);
-
-  getDailyItems(CANZONI,5,400).forEach((s,i)=>{
-    const row=document.createElement('div');row.className='song-row';
-    row.style.animationDelay=`${i*0.07}s`;
-    row.innerHTML=`
-      <div class="song-em">${s.e}</div>
-      <div class="song-inf">
-        <div class="song-t">${s.t}</div>
-        <div class="song-a">${s.a}</div>
-      </div>
-      <span class="song-y">${s.y}</span>
-      <a href="${s.url}" target="_blank" class="play-a">▶</a>`;
-    app.appendChild(row);
-  });
-
-  const nota=document.createElement('div');nota.className='music-note';
-  nota.innerHTML='💛 La musica fa bene al cuore e alla memoria.<br>Buon ascolto!';
-  app.appendChild(nota);
-}
-
-// Patch nav per aggiungere musica
-const _origRender=render;
-window._renderMusica=renderMusica;
-
-// Override render to support musica tab
-const renderWithMusica=async()=>{
-  const app=document.getElementById('app');
-  app.innerHTML='';
-  S.storico=await loadStorico();
-  const streak=calcStreak(S.storico);
-
-  const h=document.createElement('div');h.className='header';
-  h.innerHTML=`
-    <div class="header-top">
-      <span class="petal">🌸</span>
-      <h1>Il Gioco della Memoria</h1>
-      <span class="petal">🌸</span>
-    </div>
-    <div>
-      <span class="date-tag">📅 ${getDataItaliana()}</span>
-      ${streak>0?`<span class="streak-tag">🔥 ${streak} giorni</span>`:''}
-    </div>`;
-  app.appendChild(h);
-
-  const nav=document.createElement('div');nav.className='nav';
-  [['quiz','🧩','Quiz'],['memoria','🃏','Memoria'],['frasi','📜','Frasi'],['storico','📊','Storico'],['musica','🎵','Musica']].forEach(([id,icon,label])=>{
-    const btn=document.createElement('button');
-    btn.className='nav-btn'+(S.tab===id?' active':'');
-    btn.innerHTML=`<span class="nav-icon">${icon}</span>${label}`;
-    btn.onclick=()=>{S.tab=id;renderWithMusica();};
-    nav.appendChild(btn);
-  });
-  nav.style.gridTemplateColumns='repeat(5,1fr)';
-  app.appendChild(nav);
-
-  if(S.tab==='quiz')renderQuiz(app);
-  else if(S.tab==='memoria')renderMemoria(app);
-  else if(S.tab==='frasi')renderFrasi(app);
-  else if(S.tab==='storico')renderStorico(app);
-  else if(S.tab==='musica')renderMusica(app);
-};
-
-// Patch all navigation calls
-window.render=renderWithMusica;
-
-// ═══════════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════════
 // INIT
-// ═══════════════════════════════════════════════════════════
-initQuiz();initMemoria();initFrasi();
-renderWithMusica();
+// ══════════════════════════════════════════════════════════════
+initQuiz();initMemoria();initFrasi();initNumeri(1);
+renderApp();
 </script>
 </body>
 </html>
